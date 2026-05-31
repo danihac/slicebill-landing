@@ -1,0 +1,73 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "pl";
+const t = getTranslations(lang);
+---
+
+<LegalLayout
+  title={t.meta.cookiesTitle}
+  description="Polityka cookies SliceBill — jakich plików cookie używamy i jak nimi zarządzać."
+  lang={lang}
+  lastUpdated="30 maja 2025"
+>
+  <h2>1. Czym są pliki cookie?</h2>
+  <p>
+    Pliki cookie to małe pliki tekstowe przechowywane na Twoim urządzeniu przez przeglądarkę internetową podczas odwiedzin strony. Są powszechnie stosowane w celu zapewnienia sprawnego działania stron oraz dostarczania informacji ich właścicielom.
+  </p>
+
+  <h2>2. Jakich plików cookie używamy</h2>
+  <p>SliceBill (wersja webowa) używa wyłącznie niezbędnych plików cookie, koniecznych do działania aplikacji:</p>
+
+  <h3>Niezbędne pliki cookie</h3>
+  <ul>
+    <li>
+      <strong>Sesja Firebase Authentication</strong> — przechowuje stan Twojego logowania, aby pozostać zalogowanym między sesjami. Bez tego pliku cookie aplikacja nie może Cię uwierzytelnić.
+      <br /><em>Czas trwania: sesja / do 1 roku (trwałe logowanie)</em>
+    </li>
+    <li>
+      <strong>Preferencja języka</strong> — przechowuje wybrany przez Ciebie język (polski lub angielski), aby nie trzeba było go zmieniać przy każdej wizycie.
+      <br /><em>Czas trwania: 1 rok | Sposób przechowywania: localStorage (nie jest stricte cookie, ale pełni podobną funkcję)</em>
+    </li>
+  </ul>
+
+  <h3>Czego NIE używamy</h3>
+  <ul>
+    <li>Plików cookie reklamowych lub śledzących</li>
+    <li>Zewnętrznych plików cookie analitycznych (brak Google Analytics, Meta Pixel itp.)</li>
+    <li>Pikseli śledzących mediów społecznościowych</li>
+    <li>Żadnych plików cookie śledzących Cię na innych stronach</li>
+  </ul>
+
+  <h2>3. Pliki cookie podmiotów trzecich</h2>
+  <p>
+    SliceBill korzysta z <strong>Google Firebase</strong> do uwierzytelniania i usług bazy danych. Firebase może ustawić pliki cookie niezbędne do procesu uwierzytelniania. Te pliki cookie podlegają <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Polityce prywatności Google</a>.
+  </p>
+  <p>
+    Do ładowania czcionki Inter używamy Google Fonts z CDN Google. Google może rejestrować żądanie czcionki (adres IP, informacje o przeglądarce). Nie są zbierane dane osobowe poza tym, co standardowe dla logów serwera WWW.
+  </p>
+
+  <h2>4. Zarządzanie plikami cookie</h2>
+  <p>
+    Możesz kontrolować i usuwać pliki cookie w ustawieniach swojej przeglądarki. Pamiętaj, że wyłączenie niezbędnych plików cookie może uniemożliwić prawidłowe działanie wersji webowej SliceBill (możesz nie być w stanie się zalogować).
+  </p>
+  <p>Instrukcje zarządzania plikami cookie w przeglądarkach:</p>
+  <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/pl/kb/ciasteczka" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/pl-pl/105082" target="_blank" rel="noopener">Safari</a></li>
+  </ul>
+
+  <h2>5. Zmiany polityki cookies</h2>
+  <p>
+    Możemy aktualizować niniejszą Politykę cookies w celu odzwierciedlenia zmian w naszych praktykach. Poinformujemy o tym, aktualizując datę "Ostatniej aktualizacji" powyżej.
+  </p>
+
+  <h2>6. Kontakt</h2>
+  <p>
+    W razie pytań dotyczących używania przez nas plików cookie, skontaktuj się:<br />
+    DARDAN SP. Z O.O.<br />
+    Email: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+</LegalLayout>

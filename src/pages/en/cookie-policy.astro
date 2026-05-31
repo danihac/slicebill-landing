@@ -1,0 +1,73 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "en";
+const t = getTranslations(lang);
+---
+
+<LegalLayout
+  title={t.meta.cookiesTitle}
+  description="SliceBill Cookie Policy — what cookies we use and how to manage them."
+  lang={lang}
+  lastUpdated="May 30, 2025"
+>
+  <h2>1. What Are Cookies?</h2>
+  <p>
+    Cookies are small text files stored on your device by your web browser when you visit a website. They are widely used to make websites work efficiently and to provide information to site owners.
+  </p>
+
+  <h2>2. Cookies We Use</h2>
+  <p>SliceBill (web version) uses only essential cookies required for the app to function:</p>
+
+  <h3>Essential Cookies</h3>
+  <ul>
+    <li>
+      <strong>Firebase Authentication session</strong> — stores your login state so you remain signed in between sessions. Without this cookie the app cannot authenticate you.
+      <br /><em>Duration: session / up to 1 year (persistent login)</em>
+    </li>
+    <li>
+      <strong>Language preference</strong> — stores your chosen language (Polish or English) so you don't need to switch every visit.
+      <br /><em>Duration: 1 year | Storage: localStorage (not a cookie per se, but similar purpose)</em>
+    </li>
+  </ul>
+
+  <h3>What We Do NOT Use</h3>
+  <ul>
+    <li>Advertising or tracking cookies</li>
+    <li>Third-party analytics cookies (no Google Analytics, Meta Pixel, etc.)</li>
+    <li>Social media tracking pixels</li>
+    <li>Any cookies that track you across other websites</li>
+  </ul>
+
+  <h2>3. Third-Party Cookies</h2>
+  <p>
+    SliceBill uses <strong>Google Firebase</strong> for authentication and database services. Firebase may set cookies necessary for its authentication flow. These cookies are governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.
+  </p>
+  <p>
+    Google Fonts is used to load the Inter typeface from Google's CDN. Google may log the font request (IP address, browser information). No personal data beyond what is standard for web server logs is collected.
+  </p>
+
+  <h2>4. Managing Cookies</h2>
+  <p>
+    You can control and delete cookies through your browser settings. Please note that disabling essential cookies may prevent SliceBill's web app from functioning correctly (you may be unable to sign in).
+  </p>
+  <p>Browser cookie management guides:</p>
+  <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/en-us/105082" target="_blank" rel="noopener">Safari</a></li>
+  </ul>
+
+  <h2>5. Changes to This Policy</h2>
+  <p>
+    We may update this Cookie Policy to reflect changes in our practices. We will notify you by updating the "Last updated" date above.
+  </p>
+
+  <h2>6. Contact</h2>
+  <p>
+    If you have questions about our use of cookies, contact us:<br />
+    DARDAN SP. Z O.O.<br />
+    Email: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+</LegalLayout>

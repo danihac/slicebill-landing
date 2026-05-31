@@ -1,0 +1,97 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "pl";
+const t = getTranslations(lang);
+---
+
+<LegalLayout
+  title={t.meta.termsTitle}
+  description="Regulamin SliceBill — zasady i warunki korzystania z aplikacji."
+  lang={lang}
+  lastUpdated="30 maja 2025"
+>
+  <h2>1. Czym jest SliceBill</h2>
+  <p>
+    SliceBill to aplikacja do podziału wydatków grupowych, rozwijana i obsługiwana przez <strong>DARDAN SP. Z O.O.</strong> (ul. Lewandowskiej 68, 43-143 Lędziny; NIP: 6462933321; KRS: 0000497120). SliceBill pomaga grupom śledzić wspólne wydatki i obliczać kto komu ile jest winien.
+  </p>
+  <p>
+    <strong>SliceBill nie jest usługą finansową, operatorem płatności ani bankiem.</strong> Aplikacja wykonuje wyłącznie obliczenia — nie przelewa pieniędzy, nie przechowuje środków finansowych i nie realizuje transakcji.
+  </p>
+
+  <h2>2. Akceptacja regulaminu</h2>
+  <p>
+    Pobierając, instalując lub korzystając z SliceBill, akceptujesz niniejszy Regulamin. Jeśli nie zgadzasz się z jego postanowieniami, nie korzystaj z aplikacji.
+  </p>
+
+  <h2>3. Wymagany wiek</h2>
+  <p>
+    Korzystanie z SliceBill wymaga ukończenia <strong>13 lat</strong>. Korzystając z aplikacji, potwierdzasz spełnienie tego wymogu. Jeśli nie ukończyłeś/aś 18 lat, potwierdzasz posiadanie zgody rodzica lub opiekuna prawnego.
+  </p>
+
+  <h2>4. Konto użytkownika</h2>
+  <ul>
+    <li>SliceBill możesz używać bez konta (tryb gościa) dla grup lokalnych.</li>
+    <li>Synchronizacja danych między urządzeniami lub udostępnianie grup wymaga założenia konta przez e-mail/hasło lub logowanie Google.</li>
+    <li>Jesteś odpowiedzialny/a za zachowanie poufności danych logowania.</li>
+    <li>Przy tworzeniu konta musisz podać prawdziwe informacje.</li>
+    <li>Możesz usunąć konto w dowolnym momencie w Ustawieniach. Usunięcie konta jest nieodwracalne.</li>
+  </ul>
+
+  <h2>5. Dozwolone sposoby korzystania</h2>
+  <p>Zobowiązujesz się nie:</p>
+  <ul>
+    <li>korzystać z SliceBill w celach niezgodnych z prawem lub z naruszeniem obowiązujących przepisów,</li>
+    <li>próbować odtwarzać kod źródłowy, dekompilować lub obchodzić zabezpieczeń,</li>
+    <li>używać aplikacji do nękania, oszukiwania lub szkodzenia innym użytkownikom,</li>
+    <li>próbować uzyskać nieautoryzowany dostęp do danych innych użytkowników,</li>
+    <li>używać narzędzi automatycznych (boty, scrapery) do dostępu do usługi.</li>
+  </ul>
+
+  <h2>6. Twoje dane i treści</h2>
+  <p>
+    Zachowujesz własność wszystkich danych wprowadzanych do SliceBill (nazwy wydatków, kwoty, imiona uczestników). Korzystając z usługi, udzielasz DARDAN SP. Z O.O. ograniczonej licencji do przechowywania i przetwarzania tych danych wyłącznie w celu świadczenia usługi SliceBill.
+  </p>
+  <p>
+    Nie rościmy sobie praw własności do Twoich danych i nie wykorzystujemy ich do celów reklamowych ani nie sprzedajemy ich stronom trzecim.
+  </p>
+
+  <h2>7. Wyłączenie gwarancji</h2>
+  <p>
+    SliceBill jest udostępniany <strong>„tak jak jest"</strong>, bez jakichkolwiek gwarancji. Nie gwarantujemy, że aplikacja będzie wolna od błędów, nieprzerwana w działaniu ani że spełni Twoje konkretne wymagania. Obliczenia wydatków są udostępniane wyłącznie informacyjnie i mogą zawierać błędy.
+  </p>
+  <p>
+    <strong>Przed dokonaniem płatności zawsze weryfikuj kwoty rozliczeń niezależnie.</strong>
+  </p>
+
+  <h2>8. Ograniczenie odpowiedzialności</h2>
+  <p>
+    W maksymalnym zakresie dopuszczalnym przez prawo polskie, DARDAN SP. Z O.O. nie ponosi odpowiedzialności za jakiekolwiek pośrednie, przypadkowe, szczególne ani wynikowe szkody powstałe w związku z korzystaniem z SliceBill, w tym między innymi straty finansowe wynikające z błędów obliczeniowych lub utraty danych.
+  </p>
+
+  <h2>9. Dostępność usługi</h2>
+  <p>
+    Dążymy do zapewnienia niezawodnej usługi, lecz nie gwarantujemy 100% dostępności. Możemy modyfikować, zawieszać lub przerywać dowolną część usługi w dowolnym momencie, z uprzedzeniem lub bez.
+  </p>
+
+  <h2>10. Zmiany regulaminu</h2>
+  <p>
+    Możemy aktualizować niniejszy Regulamin. Poinformujemy o istotnych zmianach, aktualizując datę "Ostatniej aktualizacji". Dalsze korzystanie z SliceBill po wprowadzeniu zmian oznacza akceptację zaktualizowanego regulaminu.
+  </p>
+
+  <h2>11. Prawo właściwe</h2>
+  <p>
+    Niniejszy Regulamin podlega <strong>prawu polskiemu</strong>. Wszelkie spory będą rozstrzygane przez sądy właściwe dla siedziby DARDAN SP. Z O.O.
+  </p>
+  <p>
+    Jeśli jesteś konsumentem w UE, masz również prawo skorzystać z platformy internetowego rozstrzygania sporów (ODR): <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>
+  </p>
+
+  <h2>12. Kontakt</h2>
+  <p>
+    DARDAN SP. Z O.O.<br />
+    ul. Lewandowskiej 68, 43-143 Lędziny, Polska<br />
+    Email: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+</LegalLayout>

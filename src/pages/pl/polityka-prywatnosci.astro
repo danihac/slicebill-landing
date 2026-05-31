@@ -1,0 +1,97 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "pl";
+const t = getTranslations(lang);
+---
+
+<LegalLayout
+  title={t.meta.privacyTitle}
+  description="Polityka prywatności SliceBill — jak zbieramy, używamy i chronimy Twoje dane osobowe."
+  lang={lang}
+  lastUpdated="30 maja 2025"
+>
+  <h2>1. Administrator danych</h2>
+  <p>
+    Administratorem Twoich danych osobowych jest <strong>DARDAN SP. Z O.O.</strong>, spółka zarejestrowana w Polsce, z siedzibą przy ul. Lewandowskiej 68, 43-143 Lędziny (NIP: 6462933321, KRS: 0000497120).
+  </p>
+  <p>
+    Kontakt: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+
+  <h2>2. Jakie dane zbieramy</h2>
+  <h3>Dane podawane dobrowolnie</h3>
+  <ul>
+    <li><strong>Adres e-mail</strong> — przy zakładaniu konta lub logowaniu przez Google</li>
+    <li><strong>Nazwa wyświetlana / pseudonim</strong> — wybierany przez Ciebie w ustawieniach aplikacji</li>
+    <li><strong>Avatar profilu</strong> — opcjonalny, generowany lub uploadowany przez Ciebie</li>
+    <li><strong>Dane wydatków i grup</strong> — nazwy, kwoty, waluty, imiona uczestników, które wprowadzasz</li>
+  </ul>
+  <h3>Dane zbierane automatycznie</h3>
+  <ul>
+    <li><strong>Logi Firebase Authentication</strong> — zdarzenia logowania, adres IP, typ urządzenia</li>
+    <li><strong>Logi dostępu do Firebase Firestore</strong> — znaczniki czasowe operacji (po stronie serwera, bez śledzenia analitycznego)</li>
+    <li><strong>Preferencja języka</strong> — przechowywana lokalnie na Twoim urządzeniu</li>
+  </ul>
+  <p>
+    <strong>Nie używamy reklamodawców śledzących, zewnętrznych platform analitycznych (np. Google Analytics) ani nie sprzedajemy Twoich danych żadnej stronie trzeciej.</strong>
+  </p>
+
+  <h2>3. Podstawa prawna przetwarzania</h2>
+  <ul>
+    <li><strong>Wykonanie umowy (art. 6 ust. 1 lit. b RODO)</strong> — w celu świadczenia usługi SliceBill, w tym zarządzania kontem, synchronizacji wydatków i współdzielenia grup.</li>
+    <li><strong>Zgoda (art. 6 ust. 1 lit. a RODO)</strong> — dla funkcji opcjonalnych, takich jak powiadomienia push. Możesz wycofać zgodę w dowolnym momencie w ustawieniach aplikacji.</li>
+    <li><strong>Uzasadniony interes (art. 6 ust. 1 lit. f RODO)</strong> — w celu monitorowania bezpieczeństwa usługi i zapobiegania nadużyciom.</li>
+  </ul>
+
+  <h2>4. Jak długo przechowujemy dane</h2>
+  <ul>
+    <li>Dane konta i wydatków są przechowywane przez cały czas aktywności konta.</li>
+    <li>Po usunięciu konta Twoje dane osobowe są usuwane w ciągu <strong>30 dni</strong>, chyba że dłuższy okres przechowywania jest wymagany przez prawo.</li>
+    <li>Dane lokalne (grupy utworzone bez konta) są przechowywane wyłącznie na Twoim urządzeniu i nie są przesyłane na nasze serwery.</li>
+  </ul>
+
+  <h2>5. Komu udostępniamy dane</h2>
+  <p>Udostępniamy Twoje dane wyłącznie:</p>
+  <ul>
+    <li><strong>Google Firebase</strong> (Google LLC) — dostawca infrastruktury backendowej dla uwierzytelniania, bazy danych i hostingu. Dane mogą być przetwarzane w UE lub USA na podstawie umowy o przetwarzaniu danych i Standardowych Klauzul Umownych.</li>
+  </ul>
+  <p>Nie udostępniamy Twoich danych żadnym innym stronom trzecim.</p>
+
+  <h2>6. Twoje prawa wynikające z RODO</h2>
+  <p>Przysługuje Ci prawo do:</p>
+  <ul>
+    <li><strong>Dostępu</strong> do swoich danych osobowych</li>
+    <li><strong>Sprostowania</strong> niedokładnych danych</li>
+    <li><strong>Usunięcia</strong> danych ("prawo do bycia zapomnianym")</li>
+    <li><strong>Ograniczenia</strong> przetwarzania</li>
+    <li><strong>Przeniesienia</strong> danych — otrzymania danych w formacie nadającym się do odczytu maszynowego</li>
+    <li><strong>Sprzeciwu</strong> wobec przetwarzania opartego na uzasadnionym interesie</li>
+    <li><strong>Wycofania zgody</strong> w dowolnym momencie (dla przetwarzania opartego na zgodzie)</li>
+    <li><strong>Wniesienia skargi</strong> do polskiego organu nadzorczego (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a></li>
+  </ul>
+  <p>Aby skorzystać ze swoich praw, skontaktuj się z nami: <a href="mailto:support@slicebill.app">support@slicebill.app</a></p>
+
+  <h2>7. Bezpieczeństwo danych</h2>
+  <p>
+    Stosujemy odpowiednie środki techniczne w celu ochrony Twoich danych, w tym szyfrowany transport (HTTPS/TLS), reguły bezpieczeństwa Firebase ograniczające dostęp do danych wyłącznie dla uwierzytelnionych właścicieli, oraz tokeny zaproszeń z ograniczonym czasem ważności do udostępniania grup.
+  </p>
+
+  <h2>8. Dzieci</h2>
+  <p>
+    SliceBill nie jest przeznaczony dla użytkowników poniżej 13 roku życia. Nie zbieramy świadomie danych osobowych od dzieci poniżej 13 lat. Jeśli uważasz, że dziecko podało nam swoje dane, skontaktuj się z nami — usuniemy je niezwłocznie.
+  </p>
+
+  <h2>9. Zmiany polityki prywatności</h2>
+  <p>
+    Możemy aktualizować niniejszą Politykę prywatności. Poinformujemy Cię o istotnych zmianach, aktualizując datę "Ostatniej aktualizacji" powyżej. Dalsze korzystanie z SliceBill po wprowadzeniu zmian oznacza akceptację zaktualizowanej polityki.
+  </p>
+
+  <h2>10. Kontakt</h2>
+  <p>
+    DARDAN SP. Z O.O.<br />
+    ul. Lewandowskiej 68, 43-143 Lędziny, Polska<br />
+    Email: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+</LegalLayout>

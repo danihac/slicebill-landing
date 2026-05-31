@@ -1,0 +1,95 @@
+---
+import { getTranslations, getLangFromUrl, getAlternateUrl, type Locale } from "../i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  canonicalUrl?: string;
+}
+
+const { title, description, lang, canonicalUrl } = Astro.props;
+const t = getTranslations(lang);
+const alternateLang: Locale = lang === "en" ? "pl" : "en";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+const canonical = canonicalUrl ?? Astro.url.href;
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "SliceBill",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "iOS, Android, Web",
+  description: t.meta.homeDescription,
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  author: {
+    "@type": "Organization",
+    name: "DARDAN SP. Z O.O.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "ul. Lewandowskiej 68",
+      addressLocality: "Lędziny",
+      postalCode: "43-143",
+      addressCountry: "PL",
+    },
+  },
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link
+      rel="alternate"
+      hreflang={alternateLang}
+      href={`https://slicebill.app${alternateUrl}`}
+    />
+    <link rel="alternate" hreflang="x-default" href="https://slicebill.app/en/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`https://slicebill.app${t.meta.ogImage}`} />
+    <meta property="og:site_name" content="SliceBill" />
+    <meta property="og:locale" content={t.locale} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`https://slicebill.app${t.meta.ogImage}`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/slicebill.png" />
+    <link rel="apple-touch-icon" href="/slicebill.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </head>
+  <body class="bg-background text-foreground font-sans antialiased">
+    <slot />
+  </body>
+</html>

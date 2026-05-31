@@ -1,0 +1,97 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "en";
+const t = getTranslations(lang);
+---
+
+<LegalLayout
+  title={t.meta.privacyTitle}
+  description="SliceBill Privacy Policy — how we collect, use, and protect your personal data."
+  lang={lang}
+  lastUpdated="May 30, 2025"
+>
+  <h2>1. Data Controller</h2>
+  <p>
+    The controller of your personal data is <strong>DARDAN SP. Z O.O.</strong>, a company registered in Poland, with its registered office at ul. Lewandowskiej 68, 43-143 Lędziny, Poland (NIP: 6462933321, KRS: 0000497120).
+  </p>
+  <p>
+    Contact: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+
+  <h2>2. What Data We Collect</h2>
+  <h3>Data you provide voluntarily</h3>
+  <ul>
+    <li><strong>Email address</strong> — when you create an account or sign in with Google</li>
+    <li><strong>Display name / nickname</strong> — chosen by you in app settings</li>
+    <li><strong>Profile avatar</strong> — optional, chosen by you (Dicebear generated or uploaded)</li>
+    <li><strong>Expense and group data</strong> — names, amounts, currencies, member names you enter</li>
+  </ul>
+  <h3>Data collected automatically</h3>
+  <ul>
+    <li><strong>Firebase Authentication logs</strong> — sign-in events, IP address, device type</li>
+    <li><strong>Firebase Firestore access logs</strong> — database read/write timestamps (server-side, no analytics tracking)</li>
+    <li><strong>Language preference</strong> — stored locally on your device</li>
+  </ul>
+  <p>
+    <strong>We do not use advertising trackers, third-party analytics platforms (such as Google Analytics), or sell your data to any third party.</strong>
+  </p>
+
+  <h2>3. Why We Process Your Data (Legal Basis)</h2>
+  <ul>
+    <li><strong>Contract performance (Art. 6(1)(b) GDPR)</strong> — to provide the SliceBill service, including account management, expense syncing, and group collaboration.</li>
+    <li><strong>Consent (Art. 6(1)(a) GDPR)</strong> — for optional features such as push notifications. You may withdraw consent at any time in app settings.</li>
+    <li><strong>Legitimate interest (Art. 6(1)(f) GDPR)</strong> — for service security monitoring and fraud prevention.</li>
+  </ul>
+
+  <h2>4. How Long We Keep Your Data</h2>
+  <ul>
+    <li>Account and expense data is retained as long as your account is active.</li>
+    <li>After account deletion, your personal data is deleted within <strong>30 days</strong>, except where a longer retention is required by law.</li>
+    <li>Local-only data (groups created without an account) is stored only on your device and is not transmitted to our servers.</li>
+  </ul>
+
+  <h2>5. Data Sharing</h2>
+  <p>We share your data only with:</p>
+  <ul>
+    <li><strong>Google Firebase</strong> (Google LLC) — our backend infrastructure provider for authentication, database, and hosting. Data may be processed in the EU or US under Google's data processing agreement and Standard Contractual Clauses.</li>
+  </ul>
+  <p>We do not share your data with any other third parties.</p>
+
+  <h2>6. Your Rights Under GDPR</h2>
+  <p>You have the right to:</p>
+  <ul>
+    <li><strong>Access</strong> your personal data</li>
+    <li><strong>Rectify</strong> inaccurate data</li>
+    <li><strong>Erase</strong> your data ("right to be forgotten")</li>
+    <li><strong>Restrict</strong> processing</li>
+    <li><strong>Data portability</strong> — receive your data in a machine-readable format</li>
+    <li><strong>Object</strong> to processing based on legitimate interests</li>
+    <li><strong>Withdraw consent</strong> at any time (for consent-based processing)</li>
+    <li><strong>Lodge a complaint</strong> with the Polish supervisory authority (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a></li>
+  </ul>
+  <p>To exercise your rights, contact us at <a href="mailto:support@slicebill.app">support@slicebill.app</a>.</p>
+
+  <h2>7. Data Security</h2>
+  <p>
+    We implement appropriate technical measures to protect your data, including encrypted transport (HTTPS/TLS), Firebase Security Rules limiting data access to authenticated owners, and time-limited invite tokens for group sharing.
+  </p>
+
+  <h2>8. Children</h2>
+  <p>
+    SliceBill is not intended for users under 13 years of age. We do not knowingly collect personal data from children under 13. If you believe a child has provided us with personal information, contact us and we will delete it.
+  </p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. We will notify you of material changes by updating the "Last updated" date above. Continued use of SliceBill after changes constitutes acceptance of the updated policy.
+  </p>
+
+  <h2>10. Contact</h2>
+  <p>
+    DARDAN SP. Z O.O.<br />
+    ul. Lewandowskiej 68, 43-143 Lędziny, Poland<br />
+    Email: <a href="mailto:support@slicebill.app">support@slicebill.app</a>
+  </p>
+</LegalLayout>

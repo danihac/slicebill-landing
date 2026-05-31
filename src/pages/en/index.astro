@@ -1,0 +1,30 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Hero from "../../components/Hero.astro";
+import Features from "../../components/Features.astro";
+import HowItWorks from "../../components/HowItWorks.astro";
+import UseCases from "../../components/UseCases.astro";
+import Platforms from "../../components/Platforms.astro";
+import Footer from "../../components/Footer.astro";
+import { getTranslations } from "../../i18n";
+
+const lang = "en";
+const t = getTranslations(lang);
+---
+
+<Layout
+  title={t.meta.homeTitle}
+  description={t.meta.homeDescription}
+  lang={lang}
+>
+  <Header lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Features lang={lang} />
+    <HowItWorks lang={lang} />
+    <UseCases lang={lang} />
+    <Platforms lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

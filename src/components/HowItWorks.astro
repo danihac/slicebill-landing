@@ -1,0 +1,45 @@
+---
+import { getTranslations, type Locale } from "../i18n";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<section class="border-t border-border bg-muted/30">
+  <div class="mx-auto max-w-5xl px-6 py-20 md:py-28">
+    <!-- Section header -->
+    <div class="max-w-2xl mx-auto text-center mb-16">
+      <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        {t.howItWorks.heading}
+      </h2>
+      <p class="mt-4 text-base text-muted-foreground">
+        {t.howItWorks.subheading}
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="relative">
+      <!-- Connector line (desktop) -->
+      <div class="absolute left-0 right-0 top-7 hidden md:block">
+        <div class="mx-auto h-px bg-border" style="width: calc(100% - 8rem);"></div>
+      </div>
+
+      <div class="grid gap-10 md:grid-cols-4 md:gap-6">
+        {t.howItWorks.steps.map((step, i) => (
+          <div class="relative flex flex-col items-center text-center md:items-start md:text-left">
+            <!-- Step number bubble -->
+            <div class="relative z-10 mb-5 flex h-14 w-14 items-center justify-center rounded-full border-2 border-border bg-background text-sm font-bold text-foreground">
+              {step.number}
+            </div>
+            <h3 class="mb-2 text-base font-semibold text-foreground">{step.title}</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

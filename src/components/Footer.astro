@@ -1,0 +1,113 @@
+---
+import { getTranslations, getAlternateUrl, type Locale } from "../i18n";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+const f = t.footer;
+const base = "";
+const year = new Date().getFullYear();
+const alternateLang: Locale = lang === "en" ? "pl" : "en";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+---
+
+<footer class="border-t border-border bg-muted/20">
+  <div class="mx-auto max-w-5xl px-6 py-12">
+    <!-- Top grid -->
+    <div class="grid gap-10 sm:grid-cols-3">
+      <!-- Brand column -->
+      <div class="flex flex-col gap-3">
+        <a href={`${base}/${lang}/`} class="flex items-center gap-2.5 hover:opacity-80 transition-opacity w-fit">
+          <img
+            src={`${base}/slicebill.png`}
+            alt="SliceBill logo"
+            width="24"
+            height="24"
+            class="rounded-md shadow-sm shadow-foreground/10"
+          />
+          <span class="font-semibold text-foreground text-sm">SliceBill</span>
+        </a>
+        <p class="text-sm text-muted-foreground leading-relaxed max-w-xs">
+          {f.tagline}
+        </p>
+      </div>
+
+      <!-- Legal column -->
+      <div>
+        <p class="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{f.legal}</p>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href={`${base}/${lang}/${lang === "pl" ? "polityka-prywatnosci" : "privacy-policy"}/`}
+              class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {f.privacyPolicy}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${base}/${lang}/${lang === "pl" ? "regulamin" : "terms-of-service"}/`}
+              class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {f.termsOfService}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${base}/${lang}/${lang === "pl" ? "polityka-cookies" : "cookie-policy"}/`}
+              class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {f.cookiePolicy}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact + language column -->
+      <div>
+        <p class="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{f.contact}</p>
+        <a
+          href={`mailto:${f.contactEmail}`}
+          class="text-sm text-muted-foreground hover:text-foreground transition-colors break-all"
+        >
+          {f.contactEmail}
+        </a>
+
+        <div class="mt-6">
+          <p class="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Language</p>
+          <div class="flex gap-2">
+            <a
+              href={`${base}/en/`}
+              class={`inline-flex items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${lang === "en" ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"}`}
+              aria-current={lang === "en" ? "page" : undefined}
+            >
+              EN
+            </a>
+            <a
+              href={`${base}/pl/`}
+              class={`inline-flex items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${lang === "pl" ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"}`}
+              aria-current={lang === "pl" ? "page" : undefined}
+            >
+              PL
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="mt-10 border-t border-border pt-8">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <p class="text-xs text-muted-foreground">{f.copyright(year)}</p>
+        <div class="text-xs text-muted-foreground space-y-0.5 sm:text-right">
+          <p class="font-medium text-foreground/70">{f.company}</p>
+          <p>{f.address}</p>
+          <p>{f.nip} | {f.krs}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,36 @@
+---
+import { getTranslations, getAlternateUrl, type Locale } from "../i18n";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+const alternateLang: Locale = lang === "en" ? "pl" : "en";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+const base = "";
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-muted/60 backdrop-blur supports-[backdrop-filter]:bg-muted/40">
+  <div class="mx-auto max-w-5xl px-6 flex h-14 items-center justify-between">
+    <a href={`${base}/${lang}/`} class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+      <img
+        src={`${base}/slicebill.png`}
+        alt="SliceBill logo"
+        width="36"
+        height="36"
+        class="rounded-lg shadow-sm shadow-foreground/10"
+      />
+      <span class="font-semibold text-foreground text-[15px] tracking-tight">SliceBill</span>
+    </a>
+
+    <a
+      href={alternateUrl}
+      aria-label={t.nav.switchLangLabel}
+      class="inline-flex items-center justify-center rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+    >
+      {t.nav.switchLang}
+    </a>
+  </div>
+</header>
