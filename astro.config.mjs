@@ -1,8 +1,15 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig({
-  site: "https://slicebill.app",
+  site: process.env.SITE_URL ?? "https://slicebill.app",
   output: "static",
-  integrations: [tailwind()],
+  vite: {
+    css: {
+      postcss: {
+        plugins: [tailwindcss(), autoprefixer()],
+      },
+    },
+  },
 });
