@@ -80,14 +80,14 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
           <p class="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Language</p>
           <div class="flex gap-2">
             <a
-              href={`${base}/en/`}
+              href={getAlternateUrl(Astro.url, "en")}
               class={`inline-flex items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${lang === "en" ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"}`}
               aria-current={lang === "en" ? "page" : undefined}
             >
               EN
             </a>
             <a
-              href={`${base}/pl/`}
+              href={getAlternateUrl(Astro.url, "pl")}
               class={`inline-flex items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${lang === "pl" ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"}`}
               aria-current={lang === "pl" ? "page" : undefined}
             >
