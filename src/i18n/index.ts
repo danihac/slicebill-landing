@@ -20,7 +20,9 @@ const routeMap: Record<string, Record<Locale, string>> = {
   "regulamin": { pl: "regulamin", en: "terms-of-service" },
   "terms-of-service": { pl: "regulamin", en: "terms-of-service" },
   "polityka-cookies": { pl: "polityka-cookies", en: "cookie-policy" },
+  "polityka-cookie": { pl: "polityka-cookies", en: "cookie-policy" },
   "cookie-policy": { pl: "polityka-cookies", en: "cookie-policy" },
+  "cookies-policy": { pl: "polityka-cookies", en: "cookie-policy" },
 };
 
 export function getAlternateUrl(url: URL, targetLang: Locale): string {
