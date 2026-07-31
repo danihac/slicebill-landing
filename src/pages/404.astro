@@ -1,0 +1,103 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getTranslations } from "../i18n";
+
+const tEn = getTranslations("en");
+const tPl = getTranslations("pl");
+---
+
+<Layout title={tEn.error404.title} description={tEn.error404.description} lang="en">
+  <div id="wrapper-en" class="flex flex-col min-h-screen">
+    <Header lang="en" />
+    <main class="flex-grow flex items-center justify-center py-16 px-6">
+      <div class="max-w-md w-full text-center">
+        <!-- Modern dynamic graphics/icon -->
+        <div class="inline-flex p-4 bg-muted/50 rounded-2xl mb-6 border border-border shadow-inner">
+          <svg class="h-10 w-10 text-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground">
+          {tEn.error404.heading}
+        </h1>
+        <p class="text-base text-muted-foreground mb-8 leading-relaxed">
+          {tEn.error404.description}
+        </p>
+        <a
+          href="/en/"
+          class="inline-flex items-center justify-center rounded-xl bg-foreground px-5 py-3 text-sm font-semibold text-background hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground shadow-lg shadow-foreground/5"
+        >
+          {tEn.error404.backHome}
+        </a>
+      </div>
+    </main>
+    <Footer lang="en" />
+  </div>
+
+  <div id="wrapper-pl" class="hidden flex flex-col min-h-screen">
+    <Header lang="pl" />
+    <main class="flex-grow flex items-center justify-center py-16 px-6">
+      <div class="max-w-md w-full text-center">
+        <!-- Modern dynamic graphics/icon -->
+        <div class="inline-flex p-4 bg-muted/50 rounded-2xl mb-6 border border-border shadow-inner">
+          <svg class="h-10 w-10 text-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground">
+          {tPl.error404.heading}
+        </h1>
+        <p class="text-base text-muted-foreground mb-8 leading-relaxed">
+          {tPl.error404.description}
+        </p>
+        <a
+          href="/pl/"
+          class="inline-flex items-center justify-center rounded-xl bg-foreground px-5 py-3 text-sm font-semibold text-background hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground shadow-lg shadow-foreground/5"
+        >
+          {tPl.error404.backHome}
+        </a>
+      </div>
+    </main>
+    <Footer lang="pl" />
+  </div>
+
+  <script is:inline>
+    (function () {
+      const path = window.location.pathname;
+      let lang = 'en';
+      if (path.startsWith('/pl/') || path.startsWith('/pl')) {
+        lang = 'pl';
+      } else if (path.startsWith('/en/') || path.startsWith('/en')) {
+        lang = 'en';
+      } else {
+        const navLang = navigator.language || '';
+        if (navLang.startsWith('pl')) {
+          lang = 'pl';
+        }
+      }
+
+      const enWrapper = document.getElementById('wrapper-en');
+      const plWrapper = document.getElementById('wrapper-pl');
+
+      if (lang === 'pl') {
+        if (enWrapper) enWrapper.style.display = 'none';
+        if (plWrapper) {
+          plWrapper.style.display = 'flex';
+          plWrapper.classList.remove('hidden');
+        }
+        document.title = "Nie znaleziono strony — SliceBill";
+        document.documentElement.lang = "pl";
+      } else {
+        if (plWrapper) plWrapper.style.display = 'none';
+        if (enWrapper) {
+          enWrapper.style.display = 'flex';
+          enWrapper.classList.remove('hidden');
+        }
+        document.title = "Page not found — SliceBill";
+        document.documentElement.lang = "en";
+      }
+    })();
+  </script>
+</Layout>

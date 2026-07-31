@@ -152,6 +152,12 @@ export const en = {
     lastUpdated: "Last updated",
     backHome: "Back to home",
   },
+  error404: {
+    title: "Page not found — SliceBill",
+    heading: "Page not found",
+    description: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    backHome: "Go back home",
+  },
 } as const;
 
 export type TranslationKey = typeof en;

@@ -41,7 +41,7 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
         <ul class="space-y-2">
           <li>
             <a
-              href={`${base}/${lang}/${lang === "pl" ? "polityka-prywatnosci" : "privacy-policy"}/`}
+              href={`${base}/${lang}/privacy-policy/`}
               class="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {f.privacyPolicy}
@@ -49,7 +49,7 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
           </li>
           <li>
             <a
-              href={`${base}/${lang}/${lang === "pl" ? "regulamin" : "terms-of-service"}/`}
+              href={`${base}/${lang}/terms-of-service/`}
               class="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {f.termsOfService}
@@ -57,7 +57,7 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
           </li>
           <li>
             <a
-              href={`${base}/${lang}/${lang === "pl" ? "polityka-cookies" : "cookie-policy"}/`}
+              href={`${base}/${lang}/cookie-policy/`}
               class="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {f.cookiePolicy}

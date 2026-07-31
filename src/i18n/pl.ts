@@ -152,4 +152,10 @@ export const pl = {
     lastUpdated: "Ostatnia aktualizacja",
     backHome: "Wróć na stronę główną",
   },
+  error404: {
+    title: "Nie znaleziono strony — SliceBill",
+    heading: "Strony nie znaleziono",
+    description: "Strona, której szukasz, mogła zostać usunięta, jej nazwa uległa zmianie lub jest tymczasowo niedostępna.",
+    backHome: "Wróć na stronę główną",
+  },
 } as const;

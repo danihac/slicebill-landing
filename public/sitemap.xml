@@ -13,21 +13,21 @@
   <url>
     <loc>https://slicebill.app/en/privacy-policy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/privacy-policy/"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/polityka-prywatnosci/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/privacy-policy/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://slicebill.app/en/terms-of-service/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/terms-of-service/"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/regulamin/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/terms-of-service/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://slicebill.app/en/cookie-policy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/cookie-policy/"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/polityka-cookies/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/cookie-policy/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -41,22 +41,22 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://slicebill.app/pl/polityka-prywatnosci/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/polityka-prywatnosci/"/>
+    <loc>https://slicebill.app/pl/privacy-policy/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/privacy-policy/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/privacy-policy/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://slicebill.app/pl/regulamin/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/regulamin/"/>
+    <loc>https://slicebill.app/pl/terms-of-service/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/terms-of-service/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/terms-of-service/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://slicebill.app/pl/polityka-cookies/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/polityka-cookies/"/>
+    <loc>https://slicebill.app/pl/cookie-policy/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://slicebill.app/pl/cookie-policy/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://slicebill.app/en/cookie-policy/"/>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
