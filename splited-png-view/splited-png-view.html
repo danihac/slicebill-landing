@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>SliceBill Theme Split Composite</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+
+    /* Kontener symulujący proporcje telefonu (np. iPhone 1170x2532) */
+    .phone-container {
+      position: relative;
+      width: 430px;
+      height: 932px;
+      border-radius: 48px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 4px solid #262626;
+    }
+
+    /* Warstwa spodu: Dark Theme */
+    .theme-dark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('dark.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Warstwa wierzchnia: Light Theme z ukośnym cięciem (clip-path) */
+    .theme-light {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('light.png');
+      background-size: cover;
+      background-position: center;
+      /* Ukośne cięcie od 75% szerokości na górze do 25% na dole */
+      clip-path: polygon(0 0, 75% 0, 25% 100%, 0 100%);
+    }
+
+    /* Linia podziału / separator */
+    .divider-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-container">
+    <!-- Dark Theme (Spód) -->
+    <div class="theme-dark"></div>
+
+    <!-- Light Theme (Góra z cięciem) -->
+    <div class="theme-light"></div>
+
+    <!-- Biała linia akcentowa wzdłuż cięcia -->
+    <svg class="divider-line" viewBox="0 0 430 932">
+      <line x1="322.5" y1="0" x2="107.5" y2="932" stroke="#FFFFFF" stroke-width="4" opacity="0.9" />
+    </svg>
+  </div>
+
+</body>
+</html>
