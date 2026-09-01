@@ -58,7 +58,7 @@ const p = t.platforms;
       </div>
 
       <!-- Web -->
-      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4">
+      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 hover:border-foreground/20 transition-colors">
         <div class="h-14 w-14 flex items-center justify-center rounded-2xl bg-muted text-foreground" aria-hidden="true">
           <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -70,9 +70,17 @@ const p = t.platforms;
           <p class="font-semibold text-foreground">{p.web.label}</p>
           <p class="text-sm text-muted-foreground mt-1 font-mono text-xs">{p.web.url}</p>
         </div>
-        <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-          {p.web.status}
-        </span>
+        <a
+          href={`https://${p.web.url}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 text-xs font-medium text-background hover:bg-foreground/90 transition-all hover:scale-105 shadow-sm"
+        >
+          {p.web.cta}
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </a>
       </div>
     </div>
   </div>

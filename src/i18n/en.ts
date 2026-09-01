@@ -19,7 +19,6 @@ export const en = {
   },
 
   hero: {
-    badge: "Coming soon to App Store & Google Play",
     heading: "Split expenses without an account.",
     subheading: "No complications.",
     description:
@@ -28,6 +27,7 @@ export const en = {
     ctaGooglePlay: "Google Play",
     ctaWeb: "Web App",
     comingSoon: "Coming soon",
+    availableNow: "Available now",
     screenshotAlt: "SliceBill app — groups view",
   },
 
@@ -128,7 +128,7 @@ export const en = {
     web: {
       label: "Web",
       badge: "Open in browser",
-      status: "Coming soon",
+      cta: "Open Web App",
       url: "web.slicebill.app",
     },
   },

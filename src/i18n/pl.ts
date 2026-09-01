@@ -19,7 +19,6 @@ export const pl = {
   },
 
   hero: {
-    badge: "Wkrótce w App Store i Google Play",
     heading: "Podziel wydatki bez konta.",
     subheading: "Bez komplikacji.",
     description:
@@ -28,6 +27,7 @@ export const pl = {
     ctaGooglePlay: "Google Play",
     ctaWeb: "Wersja Web",
     comingSoon: "Wkrótce",
+    availableNow: "Dostępne teraz",
     screenshotAlt: "SliceBill — widok grup",
   },
 
@@ -128,7 +128,7 @@ export const pl = {
     web: {
       label: "Web",
       badge: "Otwórz w przeglądarce",
-      status: "Wkrótce",
+      cta: "Przejdź do aplikacji",
       url: "web.slicebill.app",
     },
   },

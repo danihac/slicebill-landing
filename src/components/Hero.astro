@@ -15,14 +15,6 @@ const base = "";
   <div class="absolute inset-0 bg-[linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)] bg-[size:40px_40px] opacity-40 pointer-events-none"></div>
 
   <div class="relative mx-auto max-w-5xl px-6 py-24 md:py-32">
-    <!-- Badge -->
-    <div class="flex justify-center mb-8">
-      <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-        <span class="inline-block h-1.5 w-1.5 rounded-full bg-foreground/40"></span>
-        {t.hero.badge}
-      </span>
-    </div>
-
     <!-- Heading -->
     <div class="text-center max-w-3xl mx-auto">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
@@ -73,19 +65,22 @@ const base = "";
 
         <!-- Web App -->
         <div class="relative group">
-          <button
-            disabled
+          <a
+            href="https://web.slicebill.app"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label={t.hero.ctaWeb}
-            class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-muted px-5 py-3 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-60"
+            class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-card px-5 py-3 text-sm font-medium text-foreground hover:bg-muted hover:border-foreground/20 transition-all hover:scale-105 shadow-sm"
           >
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
             {t.hero.ctaWeb}
-          </button>
-          <span class="absolute -top-2 -right-2 rounded-full bg-foreground px-1.5 py-0.5 text-[10px] font-medium text-background">
-            {t.hero.comingSoon}
+          </a>
+          <span class="absolute -top-2 -right-2 rounded-full bg-emerald-600 px-1.5 py-0.5 text-[10px] font-medium text-white shadow-sm flex items-center gap-1">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+            {t.hero.availableNow}
           </span>
         </div>
       </div>
