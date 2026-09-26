@@ -23,6 +23,7 @@ export const pl = {
     subheading: "Bez komplikacji.",
     description:
       "SliceBill to najprostszy sposób na rozliczanie wydatków grupowych — działa offline, chroni Twoją prywatność i automatycznie przelicza waluty.",
+    badgeAvailable: "Aplikacja dostępna w App Store i Google Play",
     ctaAppStore: "App Store",
     ctaGooglePlay: "Google Play",
     ctaWeb: "Wersja Web",
@@ -113,17 +114,19 @@ export const pl = {
   },
 
   platforms: {
-    heading: "Wkrótce na wszystkich platformach",
-    subheading: "SliceBill jest w aktywnym rozwoju.",
+    heading: "Dostępny na wszystkich platformach",
+    subheading: "Pobierz SliceBill na iOS i Androida lub korzystaj z wersji webowej.",
     ios: {
       label: "iOS",
       badge: "Pobierz w App Store",
-      status: "Wkrótce",
+      status: "Dostępne teraz",
+      cta: "Pobierz w App Store",
     },
     android: {
       label: "Android",
       badge: "Pobierz w Google Play",
-      status: "Wkrótce",
+      status: "Dostępne teraz",
+      cta: "Pobierz w Google Play",
     },
     web: {
       label: "Web",

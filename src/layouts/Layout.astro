@@ -1,5 +1,6 @@
 ---
 import { getTranslations, getLangFromUrl, getAlternateUrl, type Locale } from "../i18n";
+import { STORE_LINKS } from "../config/links";
 import "../styles/global.css";
 
 interface Props {
@@ -27,6 +28,10 @@ const schemaOrg = {
     price: "0",
     priceCurrency: "USD",
   },
+  installUrl: [
+    STORE_LINKS.appStore,
+    STORE_LINKS.googlePlay,
+  ],
   author: {
     "@type": "Organization",
     name: "DARDAN SP. Z O.O.",

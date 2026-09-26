@@ -1,5 +1,6 @@
 ---
 import { getTranslations, type Locale } from "../i18n";
+import { STORE_LINKS } from "../config/links";
 
 interface Props {
   lang: Locale;
@@ -25,7 +26,7 @@ const p = t.platforms;
     <!-- Platform cards -->
     <div class="grid gap-4 sm:grid-cols-3">
       <!-- iOS -->
-      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4">
+      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 hover:border-foreground/20 transition-colors">
         <div class="h-14 w-14 flex items-center justify-center rounded-2xl bg-muted text-foreground" aria-hidden="true">
           <svg class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -35,13 +36,21 @@ const p = t.platforms;
           <p class="font-semibold text-foreground">{p.ios.label}</p>
           <p class="text-sm text-muted-foreground mt-1">{p.ios.badge}</p>
         </div>
-        <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-          {p.ios.status}
-        </span>
+        <a
+          href={STORE_LINKS.appStore}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 text-xs font-medium text-background hover:bg-foreground/90 transition-all hover:scale-105 shadow-sm"
+        >
+          {p.ios.cta}
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </a>
       </div>
 
       <!-- Android -->
-      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4">
+      <div class="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 hover:border-foreground/20 transition-colors">
         <div class="h-14 w-14 flex items-center justify-center rounded-2xl bg-muted text-foreground" aria-hidden="true">
           <svg class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.523 15.341 19 22l-7-4-7 4 1.477-6.659L1 11l7.887-.739L12 5l3.113 5.261L23 11z" opacity=".2"/>
@@ -52,9 +61,17 @@ const p = t.platforms;
           <p class="font-semibold text-foreground">{p.android.label}</p>
           <p class="text-sm text-muted-foreground mt-1">{p.android.badge}</p>
         </div>
-        <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-          {p.android.status}
-        </span>
+        <a
+          href={STORE_LINKS.googlePlay}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 text-xs font-medium text-background hover:bg-foreground/90 transition-all hover:scale-105 shadow-sm"
+        >
+          {p.android.cta}
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </a>
       </div>
 
       <!-- Web -->
@@ -71,7 +88,7 @@ const p = t.platforms;
           <p class="text-sm text-muted-foreground mt-1 font-mono text-xs">{p.web.url}</p>
         </div>
         <a
-          href={`https://${p.web.url}`}
+          href={STORE_LINKS.webApp}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 text-xs font-medium text-background hover:bg-foreground/90 transition-all hover:scale-105 shadow-sm"

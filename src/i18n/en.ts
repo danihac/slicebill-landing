@@ -23,6 +23,7 @@ export const en = {
     subheading: "No complications.",
     description:
       "SliceBill is the simplest way to settle group costs — works offline, protects your privacy, and handles multiple currencies automatically.",
+    badgeAvailable: "Now available on App Store & Google Play",
     ctaAppStore: "App Store",
     ctaGooglePlay: "Google Play",
     ctaWeb: "Web App",
@@ -113,17 +114,19 @@ export const en = {
   },
 
   platforms: {
-    heading: "Available soon on all platforms",
-    subheading: "SliceBill is under active development.",
+    heading: "Available on all platforms",
+    subheading: "Download SliceBill on iOS and Android, or use the web version.",
     ios: {
       label: "iOS",
       badge: "Download on the App Store",
-      status: "Coming soon",
+      status: "Available now",
+      cta: "Download on the App Store",
     },
     android: {
       label: "Android",
       badge: "Get it on Google Play",
-      status: "Coming soon",
+      status: "Available now",
+      cta: "Get it on Google Play",
     },
     web: {
       label: "Web",
