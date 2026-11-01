@@ -4,12 +4,12 @@ export const pl = {
 
   meta: {
     siteName: "SliceBill",
-    homeTitle: "SliceBill — Podziel wydatki bez konta",
+    homeTitle: "SliceBill - Podział wydatków bez konta",
     homeDescription:
       "SliceBill to darmowa aplikacja do podziału wydatków grupowych. Działa offline, chroni prywatność, obsługuje wiele walut. Bez rejestracji.",
-    privacyTitle: "Polityka prywatności — SliceBill",
-    termsTitle: "Regulamin — SliceBill",
-    cookiesTitle: "Polityka cookies — SliceBill",
+    privacyTitle: "SliceBill - Polityka prywatności",
+    termsTitle: "SliceBill - Regulamin",
+    cookiesTitle: "SliceBill - Polityka cookies",
     ogImage: "/og-image-pl.png",
   },
 
@@ -156,7 +156,7 @@ export const pl = {
     backHome: "Wróć na stronę główną",
   },
   error404: {
-    title: "Nie znaleziono strony — SliceBill",
+    title: "SliceBill - Nie znaleziono strony",
     heading: "Strony nie znaleziono",
     description: "Strona, której szukasz, mogła zostać usunięta, jej nazwa uległa zmianie lub jest tymczasowo niedostępna.",
     backHome: "Wróć na stronę główną",

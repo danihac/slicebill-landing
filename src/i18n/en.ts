@@ -4,12 +4,12 @@ export const en = {
 
   meta: {
     siteName: "SliceBill",
-    homeTitle: "SliceBill — Split expenses without an account",
+    homeTitle: "SliceBill - Expense Splitting",
     homeDescription:
       "SliceBill is a free app for splitting group expenses. Works offline, protects your privacy, supports multiple currencies. No sign-up required.",
-    privacyTitle: "Privacy Policy — SliceBill",
-    termsTitle: "Terms of Service — SliceBill",
-    cookiesTitle: "Cookie Policy — SliceBill",
+    privacyTitle: "SliceBill - Privacy Policy",
+    termsTitle: "SliceBill - Terms of Service",
+    cookiesTitle: "SliceBill - Cookie Policy",
     ogImage: "/og-image-en.png",
   },
 
@@ -156,7 +156,7 @@ export const en = {
     backHome: "Back to home",
   },
   error404: {
-    title: "Page not found — SliceBill",
+    title: "SliceBill - Page Not Found",
     heading: "Page not found",
     description: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
     backHome: "Go back home",
