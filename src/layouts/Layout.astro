@@ -15,6 +15,9 @@ const t = getTranslations(lang);
 const alternateLang: Locale = lang === "en" ? "pl" : "en";
 const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
 const canonical = canonicalUrl ?? Astro.url.href;
+const ogLocale = lang === "pl" ? "pl_PL" : "en_US";
+const alternateOgLocale = alternateLang === "pl" ? "pl_PL" : "en_US";
+const ogImageUrl = `https://slicebill.app${t.meta.ogImage}`;
 
 const schemaOrg = {
   "@context": "https://schema.org",
@@ -65,20 +68,27 @@ const schemaOrg = {
     />
     <link rel="alternate" hreflang="x-default" href="https://slicebill.app/en/" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph (Facebook, LinkedIn, Slack, etc.) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={`https://slicebill.app${t.meta.ogImage}`} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="SliceBill" />
-    <meta property="og:locale" content={t.locale} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={alternateOgLocale} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`https://slicebill.app${t.meta.ogImage}`} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={title} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/slicebill.png" />

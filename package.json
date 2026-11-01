@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "SITE_URL=https://slicebill.app astro build",
-    "preview": "SITE_URL=http://localhost:4321 astro build && astro preview"
+    "preview": "SITE_URL=http://localhost:4321 astro build && astro preview",
+    "generate:og": "node scripts/generate-og.mjs",
+    "export-store-views": "node prepare-store-views/export.js"
   },
   "dependencies": {
     "astro": "^7.1.3",

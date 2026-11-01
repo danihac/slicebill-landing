@@ -20,3 +20,6 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# Store views export output (regenerated via npm run export-store-views)
+prepare-store-views/export/

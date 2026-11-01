@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SliceBill Store Views Generator | App Store & Google Play</title>
+  <script src="lib/jszip.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #121216;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-blue: #3b82f6;
+      --accent-hover: #2563eb;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(18, 18, 22, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand .badge {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      background: #27272a;
+      color: #f4f4f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    button:hover {
+      background: #3f3f46;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    button.primary {
+      background: var(--accent-blue);
+      border-color: #60a5fa;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+    }
+
+    button.primary:hover {
+      background: var(--accent-hover);
+    }
+
+    button.danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+
+    button.danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    .layout-container {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      flex: 1;
+      min-height: calc(100vh - 65px);
+    }
+
+    @media (max-width: 1024px) {
+      .layout-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Pasek boczny ustawień */
+    aside.sidebar {
+      background: var(--card-bg);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+    }
+
+    .custom-res-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-field label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    input[type="text"], input[type="number"], select {
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f4f4f5;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Główny obszar roboczy */
+    main.content {
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .tabs-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    /* Strefa upuszczania plików */
+    .drop-zone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.015);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .drop-zone p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Lista ekranów */
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .screens-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .screen-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .screen-thumb-container {
+      width: 140px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .screen-thumb {
+      width: 100%;
+      height: 220px;
+      background: #000;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .thumb-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      word-break: break-all;
+      text-align: center;
+    }
+
+    .screen-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .quick-emojis {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .emoji-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .emoji-pill:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .screen-card-actions {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Modal podglądu */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #141417;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 90vw;
+      max-width: 1200px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-body {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #18181c 0%, #09090b 100%);
+      overflow: auto;
+      padding: 30px;
+    }
+
+    #previewCanvas {
+      max-height: 75vh;
+      max-width: 100%;
+      object-fit: contain;
+      border: 1.5px solid rgba(239, 68, 68, 0.85);
+      border-radius: 8px;
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25), 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Pasek postępu eksportu */
+    .progress-banner {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18181b;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 200;
+      min-width: 320px;
+    }
+
+    .progress-banner.active {
+      display: flex;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #27272a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-blue);
+      transition: width 0.2s ease;
+    }
+
+    /* Powiadomienia Toast */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: #18181b;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #f4f4f5;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast-notification.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1>SliceBill Store Views Generator</h1>
+      <span class="badge">App Store & Google Play</span>
+    </div>
+    <div class="header-actions">
+      <button id="importConfigBtn" title="Wczytaj konfigurację (JSON)">📂 Wczytaj konfigurację</button>
+      <input type="file" id="importConfigInput" accept=".json,application/json" style="display: none;">
+      <button id="saveConfigBtn" title="Zapisz nagłówki, screeny i rozdzielczości do pliku JSON">💾 Zapisz konfigurację</button>
+      <button id="clearSessionBtn" class="danger" title="Wyczyść roboczą sesję i zacznij od nowa" style="display: none;">🗑️ Wyczyść</button>
+      <button id="exportZipBtn" class="primary" title="Generuje wszystkie mockupy do paczki ZIP z katalogami dla Apple i Google">
+        ⚡️ Eksportuj Wszystko (ZIP)
+      </button>
+    </div>
+  </header>
+
+  <div class="layout-container">
+    <!-- Pasek boczny: Ustawienia rozdzielczości i stylu -->
+    <aside class="sidebar">
+      <div>
+        <div class="section-title">🍏 Apple App Store (iPhone)</div>
+        <div class="config-card">
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_medium_61" checked>
+            <span>iPhone 6.1" Medium (<strong>1179 × 2556</strong>) <span style="font-size: 10px; padding: 2px 6px; border-radius: 9999px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-weight: 600;">Wymagane</span></span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_67" checked>
+            <span>iPhone 6.7" / 6.9" Pro Max (<strong>1290 × 2796</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_medium_63">
+            <span>iPhone 16 Pro 6.3" (<strong>1206 × 2622</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_16pm">
+            <span>iPhone 16 Pro Max 6.9" (<strong>1320 × 2868</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_65">
+            <span>iPhone 6.5" (<strong>1242 × 2688</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_iphone_custom_toggle">
+            <span>Niestandardowa rozdzielczość</span>
+          </label>
+          <div class="custom-res-group" id="iphone_custom_inputs" style="display: none;">
+            <input type="number" id="res_iphone_custom_w" placeholder="Szerokość px" value="1179">
+            <input type="number" id="res_iphone_custom_h" placeholder="Wysokość px" value="2556">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">🍏 Apple App Store (iPad)</div>
+        <div class="config-card">
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_ipad_13" checked>
+            <span>iPad Pro 13" M4 (<strong>2064 × 2752</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_ipad_129">
+            <span>iPad Pro 12.9" (<strong>2048 × 2732</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_ipad_custom_toggle">
+            <span>Niestandardowa rozdzielczość</span>
+          </label>
+          <div class="custom-res-group" id="ipad_custom_inputs" style="display: none;">
+            <input type="number" id="res_ipad_custom_w" placeholder="Szerokość px" value="2064">
+            <input type="number" id="res_ipad_custom_h" placeholder="Wysokość px" value="2752">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">🤖 Google Play Store (Mobile)</div>
+        <div class="config-card">
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_google_209" checked>
+            <span>Standard 20:9 (<strong>1080 × 2400</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_google_1959">
+            <span>19.5:9 (<strong>1080 × 2340</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_google_169">
+            <span>16:9 (<strong>1080 × 1920</strong>)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="res_google_custom_toggle">
+            <span>Niestandardowa rozdzielczość</span>
+          </label>
+          <div class="custom-res-group" id="google_custom_inputs" style="display: none;">
+            <input type="number" id="res_google_custom_w" placeholder="Szerokość px" value="1080">
+            <input type="number" id="res_google_custom_h" placeholder="Wysokość px" value="2400">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">🎨 Styl i Kolorystyka</div>
+        <div class="config-card">
+          <div class="input-field">
+            <label>Kolor tła</label>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="color" id="styleBgColor" value="#0a0a0c" style="width: 40px; height: 32px; padding: 0; cursor: pointer; border: none; background: transparent;">
+              <input type="text" id="styleBgColorHex" value="#0a0a0c">
+            </div>
+          </div>
+          <div class="input-field">
+            <label>Domyślna ramka urządzenia</label>
+            <select id="defaultFrameStyle">
+              <option value="titanium-natural" selected>iPhone 16 Pro Natural Titanium</option>
+              <option value="titanium-black">iPhone 16 Pro Black Titanium</option>
+              <option value="titanium-silver">iPhone 16 Pro Silver</option>
+              <option value="ipad-pro-13">iPad Pro 13" Aluminium</option>
+              <option value="minimal">Minimalistyczna / Ciemna ramka</option>
+            </select>
+          </div>
+          <label class="checkbox-item">
+            <input type="checkbox" id="styleShadow" checked>
+            <span>Cień urządzenia (Drop Shadow)</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Główny obszar roboczy -->
+    <main class="content">
+      <!-- Zakładki wyboru urządzenia -->
+      <div class="tabs-header">
+        <button class="tab-btn active" id="tabIphoneBtn">📱 Ekrany iPhone (<span id="countIphone">0</span>)</button>
+        <button class="tab-btn" id="tabIpadBtn">💻 Ekrany iPad (<span id="countIpad">0</span>)</button>
+        <div style="margin-left: auto; display: flex; gap: 10px;">
+          <label class="custom-file-btn">
+            <button id="addScreensBtn">➕ Dodaj screeny (pliki)</button>
+            <input type="file" id="bulkFileInput" multiple accept="image/*" style="display: none;">
+          </label>
+        </div>
+      </div>
+
+      <!-- Drag & drop strefa -->
+      <div class="drop-zone" id="dropZone">
+        <div style="font-size: 28px;">📥</div>
+        <strong>Przeciągnij i upuść tutaj surowe screeny</strong>
+        <p>Możesz upuścić wiele plików naraz (PNG / JPG). Zostaną automatycznie przypisane na podstawie ich proporcji.</p>
+      </div>
+
+      <!-- Kontener listy ekranów -->
+      <div class="screens-grid" id="screensGrid">
+        <!-- Renderowane dynamicznie -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Podglądu Live -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <select id="previewPresetSelect" style="width: auto;">
+            <option value="apple-iphone-medium" selected>iPhone 6.1" Medium (1179 × 2556) - Wymagane</option>
+            <option value="apple-iphone-large">iPhone 6.7" Large (1290 × 2796)</option>
+            <option value="google-mobile">Google Mobile (1080 × 2400)</option>
+            <option value="apple-ipad">Apple iPad Pro (2064 × 2752)</option>
+          </select>
+          <span style="font-size: 11px; padding: 3px 8px; border-radius: 999px; background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); white-space: nowrap;">Czerwona ramka = granica mockupu</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="modalDownloadBtn" class="primary">Pobierz ten mockup</button>
+          <button id="modalCloseBtn">Zamknij</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pasek postępu eksportu -->
+  <div class="progress-banner" id="progressBanner">
+    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+      <span id="progressStatus">Generowanie mockupów...</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+
+  <!-- Powiadomienie Toast -->
+  <div class="toast-notification" id="toastNotification"></div>
+
+  <!-- Ukryty canvas roboczy do renderowania w pełnej rozdzielczości -->
+  <canvas id="renderCanvas" style="display: none;"></canvas>
+
+  <script>
+    // Stan aplikacji
+    let currentTab = 'iphone'; // 'iphone' lub 'ipad'
+    let activePreviewScreen = null;
+
+    // Stan aplikacji - czysty start, gotowy na wgranie screenów przez użytkownika
+    let state = {
+      iphoneScreens: [],
+      ipadScreens: []
+    };
+
+    // Referencje DOM
+    const screensGrid = document.getElementById('screensGrid');
+    const tabIphoneBtn = document.getElementById('tabIphoneBtn');
+    const tabIpadBtn = document.getElementById('tabIpadBtn');
+    const countIphone = document.getElementById('countIphone');
+    const countIpad = document.getElementById('countIpad');
+    const dropZone = document.getElementById('dropZone');
+    const addScreensBtn = document.getElementById('addScreensBtn');
+    const bulkFileInput = document.getElementById('bulkFileInput');
+    const previewModal = document.getElementById('previewModal');
+    const previewCanvas = document.getElementById('previewCanvas');
+    const previewPresetSelect = document.getElementById('previewPresetSelect');
+    const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const exportZipBtn = document.getElementById('exportZipBtn');
+    const saveConfigBtn = document.getElementById('saveConfigBtn');
+    const importConfigBtn = document.getElementById('importConfigBtn');
+    const importConfigInput = document.getElementById('importConfigInput');
+    const clearSessionBtn = document.getElementById('clearSessionBtn');
+    const defaultFrameStyle = document.getElementById('defaultFrameStyle');
+    const styleShadow = document.getElementById('styleShadow');
+    const progressBanner = document.getElementById('progressBanner');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBarFill = document.getElementById('progressBarFill');
+
+    // Kolory i styl
+    const styleBgColor = document.getElementById('styleBgColor');
+    const styleBgColorHex = document.getElementById('styleBgColorHex');
+
+    // Niestandardowe rozdzielczości checkboxy i inputy
+    const resIphoneCustomToggle = document.getElementById('res_iphone_custom_toggle');
+    const iphoneCustomInputs = document.getElementById('iphone_custom_inputs');
+    const resIpadCustomToggle = document.getElementById('res_ipad_custom_toggle');
+    const ipadCustomInputs = document.getElementById('ipad_custom_inputs');
+    const resGoogleCustomToggle = document.getElementById('res_google_custom_toggle');
+    const googleCustomInputs = document.getElementById('google_custom_inputs');
+
+    // Powiadomienia Toast
+    let toastTimer = null;
+    function showToast(message) {
+      const toastEl = document.getElementById('toastNotification');
+      if (!toastEl) return;
+      toastEl.innerHTML = message;
+      toastEl.classList.add('active');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toastEl.classList.remove('active');
+      }, 3500);
+    }
+
+    // AUTOMATYCZNY CACHE SESJI W INDEXEDDB (Zapobiega utracie pracy przy odświeżeniu)
+    const DB_NAME = 'SliceBillStoreViewsCache';
+    const DB_STORE = 'session';
+    let dbInstance = null;
+
+    function getDB() {
+      if (dbInstance) return Promise.resolve(dbInstance);
+      return new Promise((resolve) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(DB_STORE)) {
+            db.createObjectStore(DB_STORE);
+          }
+        };
+        req.onsuccess = (e) => {
+          dbInstance = e.target.result;
+          resolve(dbInstance);
+        };
+        req.onerror = () => resolve(null);
+      });
+    }
+
+    let autoSaveTimer = null;
+    function autoSaveSession() {
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(async () => {
+        try {
+          const db = await getDB();
+          if (!db) return;
+          const sessionData = buildConfigExportData();
+          const tx = db.transaction(DB_STORE, 'readwrite');
+          tx.objectStore(DB_STORE).put(sessionData, 'current_session');
+          updateClearBtnVisibility();
+        } catch (e) {
+          console.warn('Błąd zapisu do IndexedDB:', e);
+        }
+      }, 300);
+    }
+
+    async function loadCachedSession() {
+      try {
+        const db = await getDB();
+        if (!db) return false;
+        return new Promise((resolve) => {
+          const tx = db.transaction(DB_STORE, 'readonly');
+          const req = tx.objectStore(DB_STORE).get('current_session');
+          req.onsuccess = async () => {
+            const data = req.result;
+            if (data && ((data.iphoneScreens && data.iphoneScreens.length > 0) || (data.ipadScreens && data.ipadScreens.length > 0))) {
+              await applyConfig(data, false);
+              showToast('🔄 Przywrócono Twoją zapisaną sesję roboczą');
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          };
+          req.onerror = () => resolve(false);
+        });
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function clearCachedSession() {
+      try {
+        const db = await getDB();
+        if (db) {
+          const tx = db.transaction(DB_STORE, 'readwrite');
+          tx.objectStore(DB_STORE).delete('current_session');
+        }
+      } catch (e) {
+        console.warn('Błąd czyszczenia IndexedDB:', e);
+      }
+      state.iphoneScreens = [];
+      state.ipadScreens = [];
+      renderScreens();
+      updateClearBtnVisibility();
+      showToast('🗑️ Sesja robocza została wyczyszczona.');
+    }
+
+    function updateClearBtnVisibility() {
+      if (!clearSessionBtn) return;
+      const count = state.iphoneScreens.length + state.ipadScreens.length;
+      clearSessionBtn.style.display = count > 0 ? 'inline-flex' : 'none';
+    }
+
+    // Budowanie pełnego obiektu konfiguracji do eksportu / cache
+    function buildConfigExportData() {
+      return {
+        savedAt: new Date().toISOString(),
+        resolutions: {
+          appleIphone: [
+            { id: "iphone-medium-61", name: "iPhone Dynamic Island 6.1\" (Medium display)", width: 1179, height: 2556, enabled: document.getElementById('res_iphone_medium_61').checked },
+            { id: "iphone-67-69", name: "iPhone 6.7\" / 6.9\" (Pro Max / Plus)", width: 1290, height: 2796, enabled: document.getElementById('res_iphone_67').checked },
+            { id: "iphone-medium-63", name: "iPhone 16 Pro 6.3\" (Medium display)", width: 1206, height: 2622, enabled: document.getElementById('res_iphone_medium_63').checked },
+            { id: "iphone-16-pro-max", name: "iPhone 16 Pro Max 6.9\"", width: 1320, height: 2868, enabled: document.getElementById('res_iphone_16pm').checked },
+            { id: "iphone-65", name: "iPhone 6.5\"", width: 1242, height: 2688, enabled: document.getElementById('res_iphone_65').checked }
+          ],
+          appleIpad: [
+            { id: "ipad-13-m4", name: "iPad Pro 13\" (M4)", width: 2064, height: 2752, enabled: document.getElementById('res_ipad_13').checked },
+            { id: "ipad-129", name: "iPad Pro 12.9\"", width: 2048, height: 2732, enabled: document.getElementById('res_ipad_129').checked }
+          ],
+          googleMobile: [
+            { id: "google-20-9", name: "Google Mobile Standard (20:9)", width: 1080, height: 2400, enabled: document.getElementById('res_google_209').checked },
+            { id: "google-195-9", name: "Google Mobile (19.5:9)", width: 1080, height: 2340, enabled: document.getElementById('res_google_1959').checked },
+            { id: "google-16-9", name: "Google Mobile (16:9)", width: 1080, height: 1920, enabled: document.getElementById('res_google_169').checked }
+          ],
+          custom: {
+            iphone: {
+              enabled: resIphoneCustomToggle.checked,
+              width: parseInt(document.getElementById('res_iphone_custom_w').value) || 1179,
+              height: parseInt(document.getElementById('res_iphone_custom_h').value) || 2556
+            },
+            ipad: {
+              enabled: resIpadCustomToggle.checked,
+              width: parseInt(document.getElementById('res_ipad_custom_w').value) || 2064,
+              height: parseInt(document.getElementById('res_ipad_custom_h').value) || 2752
+            },
+            google: {
+              enabled: resGoogleCustomToggle.checked,
+              width: parseInt(document.getElementById('res_google_custom_w').value) || 1080,
+              height: parseInt(document.getElementById('res_google_custom_h').value) || 2400
+            }
+          }
+        },
+        styling: {
+          backgroundColor: styleBgColor.value,
+          shadowEnabled: document.getElementById('styleShadow').checked,
+          defaultFrameStyle: document.getElementById('defaultFrameStyle').value
+        },
+        iphoneScreens: state.iphoneScreens.map(s => ({
+          id: s.id,
+          filename: s.filename,
+          url: s.url,
+          title: s.title,
+          subtitle: s.subtitle,
+          frame: s.frame
+        })),
+        ipadScreens: state.ipadScreens.map(s => ({
+          id: s.id,
+          filename: s.filename,
+          url: s.url,
+          title: s.title,
+          subtitle: s.subtitle,
+          frame: s.frame
+        }))
+      };
+    }
+
+    // Aplikowanie wczytanej konfiguracji
+    async function applyConfig(configData, showToastNotice = true) {
+      if (!configData || typeof configData !== 'object') return;
+
+      // 1. Stylizacja
+      if (configData.styling) {
+        const st = configData.styling;
+        if (st.backgroundColor) {
+          styleBgColor.value = st.backgroundColor;
+          styleBgColorHex.value = st.backgroundColor;
+        }
+        if (typeof st.shadowEnabled !== 'undefined') {
+          styleShadow.checked = !!st.shadowEnabled;
+        } else if (typeof st.shadow !== 'undefined') {
+          styleShadow.checked = !!st.shadow;
+        }
+        if (st.defaultFrameStyle && defaultFrameStyle) {
+          defaultFrameStyle.value = st.defaultFrameStyle;
+        } else if (st.frameStyle && defaultFrameStyle) {
+          defaultFrameStyle.value = st.frameStyle;
+        }
+      }
+
+      // 2. Rozdzielczości
+      if (configData.resolutions) {
+        const res = configData.resolutions;
+
+        // Apple iPhone
+        if (Array.isArray(res.appleIphone)) {
+          const map = {};
+          res.appleIphone.forEach(item => { map[item.id] = item.enabled; });
+          if (typeof map['iphone-medium-61'] !== 'undefined') document.getElementById('res_iphone_medium_61').checked = !!map['iphone-medium-61'];
+          if (typeof map['iphone-67-69'] !== 'undefined') document.getElementById('res_iphone_67').checked = !!map['iphone-67-69'];
+          if (typeof map['iphone-medium-63'] !== 'undefined') document.getElementById('res_iphone_medium_63').checked = !!map['iphone-medium-63'];
+          if (typeof map['iphone-16-pro-max'] !== 'undefined') document.getElementById('res_iphone_16pm').checked = !!map['iphone-16-pro-max'];
+          if (typeof map['iphone-65'] !== 'undefined') document.getElementById('res_iphone_65').checked = !!map['iphone-65'];
+        }
+
+        // Apple iPad
+        if (Array.isArray(res.appleIpad)) {
+          const map = {};
+          res.appleIpad.forEach(item => { map[item.id] = item.enabled; });
+          if (typeof map['ipad-13-m4'] !== 'undefined') document.getElementById('res_ipad_13').checked = !!map['ipad-13-m4'];
+          if (typeof map['ipad-129'] !== 'undefined') document.getElementById('res_ipad_129').checked = !!map['ipad-129'];
+        }
+
+        // Google Mobile
+        if (Array.isArray(res.googleMobile)) {
+          const map = {};
+          res.googleMobile.forEach(item => { map[item.id] = item.enabled; });
+          if (typeof map['google-20-9'] !== 'undefined') document.getElementById('res_google_209').checked = !!map['google-20-9'];
+          if (typeof map['google-195-9'] !== 'undefined') document.getElementById('res_google_1959').checked = !!map['google-195-9'];
+          if (typeof map['google-16-9'] !== 'undefined') document.getElementById('res_google_169').checked = !!map['google-16-9'];
+        }
+
+        // Niestandardowe rozdzielczości
+        if (res.custom) {
+          if (res.custom.iphone) {
+            resIphoneCustomToggle.checked = !!res.custom.iphone.enabled;
+            iphoneCustomInputs.style.display = res.custom.iphone.enabled ? 'grid' : 'none';
+            if (res.custom.iphone.width) document.getElementById('res_iphone_custom_w').value = res.custom.iphone.width;
+            if (res.custom.iphone.height) document.getElementById('res_iphone_custom_h').value = res.custom.iphone.height;
+          }
+          if (res.custom.ipad) {
+            resIpadCustomToggle.checked = !!res.custom.ipad.enabled;
+            ipadCustomInputs.style.display = res.custom.ipad.enabled ? 'grid' : 'none';
+            if (res.custom.ipad.width) document.getElementById('res_ipad_custom_w').value = res.custom.ipad.width;
+            if (res.custom.ipad.height) document.getElementById('res_ipad_custom_h').value = res.custom.ipad.height;
+          }
+          if (res.custom.google) {
+            resGoogleCustomToggle.checked = !!res.custom.google.enabled;
+            googleCustomInputs.style.display = res.custom.google.enabled ? 'grid' : 'none';
+            if (res.custom.google.width) document.getElementById('res_google_custom_w').value = res.custom.google.width;
+            if (res.custom.google.height) document.getElementById('res_google_custom_h').value = res.custom.google.height;
+          }
+        }
+      }
+
+      // 3. Ekrany iPhone
+      if (Array.isArray(configData.iphoneScreens)) {
+        state.iphoneScreens = [];
+        for (const item of configData.iphoneScreens) {
+          const scr = {
+            id: item.id || ('iphone-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4)),
+            filename: item.filename || 'iphone-screen.png',
+            url: item.url || item.relativePath || ('raw-iphone-screens/' + item.filename),
+            title: item.title || '',
+            subtitle: item.subtitle || '',
+            frame: item.frame || (defaultFrameStyle ? defaultFrameStyle.value : 'titanium-natural'),
+            loadedImg: null
+          };
+          if (scr.url) await loadScreenImage(scr);
+          state.iphoneScreens.push(scr);
+        }
+      }
+
+      // 4. Ekrany iPad
+      if (Array.isArray(configData.ipadScreens)) {
+        state.ipadScreens = [];
+        for (const item of configData.ipadScreens) {
+          const scr = {
+            id: item.id || ('ipad-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4)),
+            filename: item.filename || 'ipad-screen.png',
+            url: item.url || item.relativePath || ('raw-ipad-screens/' + item.filename),
+            title: item.title || '',
+            subtitle: item.subtitle || '',
+            frame: item.frame || 'ipad-pro-13',
+            loadedImg: null
+          };
+          if (scr.url) await loadScreenImage(scr);
+          state.ipadScreens.push(scr);
+        }
+      }
+
+      renderScreens();
+      updateClearBtnVisibility();
+      autoSaveSession();
+
+      if (showToastNotice) {
+        const totalScreens = state.iphoneScreens.length + state.ipadScreens.length;
+        showToast(`✅ Wczytano konfigurację (zrzuty: ${totalScreens})`);
+      }
+    }
+
+    // Nasłuchiwanie zmian ustawień w pasku bocznym (auto-save)
+    styleBgColor.addEventListener('input', () => {
+      styleBgColorHex.value = styleBgColor.value;
+      autoSaveSession();
+    });
+    styleBgColorHex.addEventListener('input', () => {
+      styleBgColor.value = styleBgColorHex.value;
+      autoSaveSession();
+    });
+    if (defaultFrameStyle) defaultFrameStyle.addEventListener('change', autoSaveSession);
+    if (styleShadow) styleShadow.addEventListener('change', autoSaveSession);
+
+    resIphoneCustomToggle.addEventListener('change', () => {
+      iphoneCustomInputs.style.display = resIphoneCustomToggle.checked ? 'grid' : 'none';
+      autoSaveSession();
+    });
+    document.getElementById('res_iphone_medium_61').addEventListener('change', autoSaveSession);
+    document.getElementById('res_iphone_67').addEventListener('change', autoSaveSession);
+    document.getElementById('res_iphone_medium_63').addEventListener('change', autoSaveSession);
+    document.getElementById('res_iphone_16pm').addEventListener('change', autoSaveSession);
+    document.getElementById('res_iphone_65').addEventListener('change', autoSaveSession);
+    document.getElementById('res_iphone_custom_w').addEventListener('input', autoSaveSession);
+    document.getElementById('res_iphone_custom_h').addEventListener('input', autoSaveSession);
+
+    resIpadCustomToggle.addEventListener('change', () => {
+      ipadCustomInputs.style.display = resIpadCustomToggle.checked ? 'grid' : 'none';
+      autoSaveSession();
+    });
+    document.getElementById('res_ipad_13').addEventListener('change', autoSaveSession);
+    document.getElementById('res_ipad_129').addEventListener('change', autoSaveSession);
+    document.getElementById('res_ipad_custom_w').addEventListener('input', autoSaveSession);
+    document.getElementById('res_ipad_custom_h').addEventListener('input', autoSaveSession);
+
+    resGoogleCustomToggle.addEventListener('change', () => {
+      googleCustomInputs.style.display = resGoogleCustomToggle.checked ? 'grid' : 'none';
+      autoSaveSession();
+    });
+    document.getElementById('res_google_209').addEventListener('change', autoSaveSession);
+    document.getElementById('res_google_1959').addEventListener('change', autoSaveSession);
+    document.getElementById('res_google_169').addEventListener('change', autoSaveSession);
+    document.getElementById('res_google_custom_w').addEventListener('input', autoSaveSession);
+    document.getElementById('res_google_custom_h').addEventListener('input', autoSaveSession);
+
+    // Inicjalizacja ładowania pojedynczego obrazu
+    async function loadScreenImage(screen) {
+      if (screen.loadedImg) return screen.loadedImg;
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          screen.loadedImg = img;
+          resolve(img);
+        };
+        img.onerror = () => {
+          console.warn('Nie udało się załadować obrazu:', screen.url);
+          resolve(null);
+        };
+        img.src = screen.url;
+      });
+    }
+
+    // Przełączanie zakładek
+    tabIphoneBtn.addEventListener('click', () => {
+      currentTab = 'iphone';
+      tabIphoneBtn.classList.add('active');
+      tabIpadBtn.classList.remove('active');
+      renderScreens();
+    });
+
+    tabIpadBtn.addEventListener('click', () => {
+      currentTab = 'ipad';
+      tabIpadBtn.classList.add('active');
+      tabIphoneBtn.classList.remove('active');
+      renderScreens();
+    });
+
+    // Renderowanie kart ekranów
+    function renderScreens() {
+      countIphone.textContent = state.iphoneScreens.length;
+      countIpad.textContent = state.ipadScreens.length;
+
+      const activeList = currentTab === 'iphone' ? state.iphoneScreens : state.ipadScreens;
+      screensGrid.innerHTML = '';
+
+      if (activeList.length === 0) {
+        screensGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 48px 24px; text-align: center; color: var(--text-muted); background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-color); border-radius: 12px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">📥</div>
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">
+              Brak dodanych screenów dla ${currentTab === 'iphone' ? 'iPhone' : 'iPad'}
+            </div>
+            <div style="font-size: 13px; margin-bottom: 18px;">
+              Przeciągnij i upuść tutaj pliki graficzne (lub plik konfiguracji JSON), albo wybierz opcję poniżej:
+            </div>
+            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+              <button type="button" id="emptyStateAddBtn">➕ Dodaj screeny (PNG/JPG)</button>
+              <button type="button" id="emptyStateImportBtn">📂 Wczytaj konfigurację (JSON)</button>
+            </div>
+          </div>
+        `;
+        const emptyAdd = document.getElementById('emptyStateAddBtn');
+        if (emptyAdd) emptyAdd.addEventListener('click', () => bulkFileInput.click());
+        const emptyImport = document.getElementById('emptyStateImportBtn');
+        if (emptyImport) emptyImport.addEventListener('click', () => importConfigInput.click());
+        return;
+      }
+
+      activeList.forEach((screen, index) => {
+        const card = document.createElement('div');
+        card.className = 'screen-card';
+
+        const quickEmojis = ['📸', '🧾', '📊', '⚡️', '💡', '🤖', '🔒', '✨'];
+
+        card.innerHTML = `
+          <div class="screen-thumb-container">
+            <img class="screen-thumb" src="${screen.url}" alt="${screen.filename}" />
+            <span class="thumb-label">${screen.filename}</span>
+          </div>
+          <div class="screen-details">
+            <div class="input-field">
+              <label>Nagłówek mockupu (widoczny na samej górze)</label>
+              <input type="text" class="screen-title-input" value="${screen.title.replace(/"/g, '&quot;')}" placeholder="Wpisz chwytliwy nagłówek...">
+              <div class="quick-emojis">
+                ${quickEmojis.map(e => `<span class="emoji-pill">${e}</span>`).join('')}
+              </div>
+            </div>
+
+            <div class="input-field">
+              <label>Opcjonalny podtytuł</label>
+              <input type="text" class="screen-subtitle-input" value="${(screen.subtitle || '').replace(/"/g, '&quot;')}" placeholder="Dodatkowe wyjaśnienie (opcjonalne)">
+            </div>
+
+            <div class="input-field">
+              <label>Model ramki urządzenia</label>
+              <select class="screen-frame-select">
+                <option value="titanium-natural" ${screen.frame === 'titanium-natural' ? 'selected' : ''}>iPhone 16 Pro Natural Titanium</option>
+                <option value="titanium-black" ${screen.frame === 'titanium-black' ? 'selected' : ''}>iPhone 16 Pro Black Titanium</option>
+                <option value="titanium-silver" ${screen.frame === 'titanium-silver' ? 'selected' : ''}>iPhone 16 Pro Silver</option>
+                <option value="ipad-pro-13" ${screen.frame === 'ipad-pro-13' ? 'selected' : ''}>iPad Pro 13" M4</option>
+                <option value="minimal" ${screen.frame === 'minimal' ? 'selected' : ''}>Minimalistyczna cienka ramka</option>
+              </select>
+            </div>
+
+            <div class="screen-card-actions">
+              <button class="primary preview-btn">👁️ Podgląd</button>
+              <button class="export-single-btn">💾 Pobierz</button>
+              <button class="switch-device-btn" title="${currentTab === 'iphone' ? 'Przenieś ten screen do iPad' : 'Przenieś ten screen do iPhone'}">
+                ${currentTab === 'iphone' ? '⇄ Do iPad' : '⇄ Do iPhone'}
+              </button>
+              <button class="danger delete-btn" title="Usuń z listy">🗑️</button>
+            </div>
+          </div>
+        `;
+
+        // Obsługa edycji pól (z auto-save)
+        const titleInput = card.querySelector('.screen-title-input');
+        titleInput.addEventListener('input', (e) => {
+          screen.title = e.target.value;
+          autoSaveSession();
+        });
+
+        const subtitleInput = card.querySelector('.screen-subtitle-input');
+        subtitleInput.addEventListener('input', (e) => {
+          screen.subtitle = e.target.value;
+          autoSaveSession();
+        });
+
+        const frameSelect = card.querySelector('.screen-frame-select');
+        frameSelect.addEventListener('change', (e) => {
+          screen.frame = e.target.value;
+          autoSaveSession();
+        });
+
+        // Emoji szybkie wstawianie
+        card.querySelectorAll('.emoji-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            titleInput.value = pill.textContent + ' ' + titleInput.value.replace(/^[^\w\s]+\s*/u, '');
+            screen.title = titleInput.value;
+            autoSaveSession();
+          });
+        });
+
+        // Przycisk podglądu
+        card.querySelector('.preview-btn').addEventListener('click', () => {
+          openPreview(screen);
+        });
+
+        // Przycisk eksportu pojedynczego
+        card.querySelector('.export-single-btn').addEventListener('click', async (e) => {
+          await exportSingleScreen(screen, e.currentTarget);
+        });
+
+        // Przenoszenie między urządzeniami
+        card.querySelector('.switch-device-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (currentTab === 'iphone') {
+            const idx = state.iphoneScreens.findIndex(s => s.id === screen.id);
+            if (idx !== -1) {
+              const item = state.iphoneScreens.splice(idx, 1)[0];
+              item.frame = 'ipad-pro-13';
+              state.ipadScreens.push(item);
+              renderScreens();
+              autoSaveSession();
+              showToast('Przeniesiono do iPad');
+            }
+          } else {
+            const idx = state.ipadScreens.findIndex(s => s.id === screen.id);
+            if (idx !== -1) {
+              const item = state.ipadScreens.splice(idx, 1)[0];
+              item.frame = defaultFrameStyle ? defaultFrameStyle.value : 'titanium-natural';
+              state.iphoneScreens.push(item);
+              renderScreens();
+              autoSaveSession();
+              showToast('Przeniesiono do iPhone');
+            }
+          }
+        });
+
+        // Usuwanie (natychmiastowe usunięcie elementu po ID z auto-save)
+        card.querySelector('.delete-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          const arr = currentTab === 'iphone' ? state.iphoneScreens : state.ipadScreens;
+          const targetIndex = arr.findIndex(s => s.id === screen.id);
+          if (targetIndex !== -1) {
+            arr.splice(targetIndex, 1);
+            renderScreens();
+            updateClearBtnVisibility();
+            autoSaveSession();
+          }
+        });
+
+        screensGrid.appendChild(card);
+      });
+    }
+
+    // Dodawanie plików przez przeciąganie / input
+    addScreensBtn.addEventListener('click', () => bulkFileInput.click());
+    bulkFileInput.addEventListener('change', (e) => handleAddedFiles(e.target.files));
+
+    dropZone.addEventListener('click', () => bulkFileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      handleAddedFiles(e.dataTransfer.files);
+    });
+
+    async function handleAddedFiles(fileList) {
+      if (!fileList || fileList.length === 0) return;
+
+      // Sprawdź czy wrzucono plik konfiguracji JSON
+      for (const file of fileList) {
+        if (file.name.endsWith('.json') || file.type === 'application/json') {
+          const reader = new FileReader();
+          reader.onload = async (ev) => {
+            try {
+              const parsed = JSON.parse(ev.target.result);
+              await applyConfig(parsed, true);
+            } catch (err) {
+              alert('Niepoprawny plik JSON konfiguracji: ' + err.message);
+            }
+          };
+          reader.readAsText(file);
+          return;
+        }
+      }
+
+      for (const file of fileList) {
+        if (!file.type.startsWith('image/')) continue;
+        const reader = new FileReader();
+        await new Promise((res) => {
+          reader.onload = (ev) => {
+            const dataUrl = ev.target.result;
+            const img = new Image();
+            img.onload = () => {
+              const ratio = img.width / img.height;
+              // Priorytet ma aktualnie wybrana zakładka (iPhone / iPad)
+              let isIpad;
+              if (currentTab === 'ipad') {
+                isIpad = true;
+              } else if (currentTab === 'iphone') {
+                isIpad = false;
+              } else {
+                isIpad = ratio > 0.65;
+              }
+
+              const newScreen = {
+                id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                filename: file.name,
+                url: dataUrl,
+                title: '📸 ' + file.name.replace(/\.[^/.]+$/, ""),
+                subtitle: '',
+                frame: isIpad ? 'ipad-pro-13' : (defaultFrameStyle ? defaultFrameStyle.value : 'titanium-natural'),
+                loadedImg: img
+              };
+
+              if (isIpad) {
+                state.ipadScreens.push(newScreen);
+              } else {
+                state.iphoneScreens.push(newScreen);
+              }
+              res();
+            };
+            img.src = dataUrl;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      renderScreens();
+      updateClearBtnVisibility();
+      autoSaveSession();
+    }
+
+    // SILNIK RYSOWANIA MOCKUPÓW NA CANVAS (Wektorowa ramka, cień, font, Dynamic Island)
+    async function renderMockupToCanvas(targetCanvas, screen, options) {
+      const {
+        width,
+        height,
+        backgroundColor = styleBgColor.value || '#0a0a0c',
+        textColor = '#ffffff',
+        shadowEnabled = document.getElementById('styleShadow').checked,
+        frameType = screen.frame || 'titanium-natural'
+      } = options;
+
+      targetCanvas.width = width;
+      targetCanvas.height = height;
+      const ctx = targetCanvas.getContext('2d');
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Tło mockupu
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Nagłówek (Title & Subtitle)
+      ctx.fillStyle = textColor;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+
+      // Rozmiar czcionki proporcjonalny do szerokości mockupu
+      const titleFontSize = Math.round(width * 0.056);
+      ctx.font = `bold ${titleFontSize}px -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif`;
+
+      const titleY = Math.round(height * 0.055);
+      const titleText = screen.title || '';
+
+      // Podział tekstu na linie jeśli jest długi lub zawiera \n
+      const words = titleText.split(' ');
+      const lines = [];
+      let currentLine = '';
+      const maxLineWidth = width * 0.88;
+
+      if (titleText.includes('\n')) {
+        titleText.split('\n').forEach(l => lines.push(l));
+      } else {
+        for (const w of words) {
+          const testLine = currentLine ? currentLine + ' ' + w : w;
+          if (ctx.measureText(testLine).width > maxLineWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = w;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        if (currentLine) lines.push(currentLine);
+      }
+
+      const lineHeight = titleFontSize * 1.25;
+      lines.forEach((line, idx) => {
+        ctx.fillText(line, width / 2, titleY + (idx * lineHeight));
+      });
+
+      // Opcjonalny podtytuł
+      let titleBlockBottom = titleY + (lines.length * lineHeight);
+      if (screen.subtitle) {
+        const subFontSize = Math.round(titleFontSize * 0.52);
+        ctx.font = `500 ${subFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillText(screen.subtitle, width / 2, titleBlockBottom + 12);
+        titleBlockBottom += subFontSize + 20;
+      }
+
+      // 3. Pozycjonowanie urządzenia (Phone lub iPad)
+      const isIpadCanvas = (width / height) > 0.65;
+      const isIpadDevice = frameType === 'ipad-pro-13';
+
+      let deviceW, deviceH, deviceX, deviceY;
+
+      if (isIpadDevice) {
+        // iPad Pro Frame
+        deviceW = Math.round(width * 0.82);
+        deviceH = Math.round(deviceW * (4 / 3)); // proporcja 3:4
+        if (deviceH > height - titleBlockBottom - 40) {
+          deviceH = height - titleBlockBottom - 60;
+          deviceW = Math.round(deviceH * (3 / 4));
+        }
+        deviceX = Math.round((width - deviceW) / 2);
+        deviceY = Math.round(titleBlockBottom + (height - titleBlockBottom - deviceH) * 0.45);
+      } else {
+        // iPhone Frame
+        deviceW = isIpadCanvas ? Math.round(width * 0.48) : Math.round(width * 0.81);
+        deviceH = Math.round(deviceW * 2.15); // proporcja telefonu ok. 9:19.5
+        deviceX = Math.round((width - deviceW) / 2);
+        deviceY = Math.round(titleBlockBottom + (height - titleBlockBottom - deviceH) * 0.5);
+        if (deviceY < titleBlockBottom + 30) deviceY = titleBlockBottom + 30;
+      }
+
+      // 4. Rysowanie ramki urządzenia
+      if (isIpadDevice) {
+        drawIpadFrame(ctx, screen.loadedImg, deviceX, deviceY, deviceW, deviceH, shadowEnabled, frameType);
+      } else {
+        drawIphoneFrame(ctx, screen.loadedImg, deviceX, deviceY, deviceW, deviceH, shadowEnabled, frameType);
+      }
+    }
+
+    // Pomocnicza funkcja rysowania zaokrąglonego prostokąta
+    function roundRect(ctx, x, y, w, h, r) {
+      if (ctx.roundRect) {
+        ctx.roundRect(x, y, w, h, r);
+      } else {
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+      }
+    }
+
+    // RYSOWANIE REALISTYCZNEJ RAMKI IPHONE (Titanium / Dynamic Island / Przyciski / Cień)
+    function drawIphoneFrame(ctx, img, x, y, w, h, shadowEnabled, frameType) {
+      const outerRadius = Math.round(w * 0.145);
+      const bezelRim = Math.max(3, Math.round(w * 0.014)); // metalowa obramówka
+      const blackBezel = Math.max(8, Math.round(w * 0.024)); // czarna wewnętrzna ramka
+      const screenRadius = outerRadius - bezelRim - blackBezel;
+
+      // 1. Cień za urządzeniem
+      if (shadowEnabled) {
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+        ctx.shadowBlur = Math.round(w * 0.08);
+        ctx.shadowOffsetY = Math.round(w * 0.04);
+        ctx.beginPath();
+        roundRect(ctx, x, y, w, h, outerRadius);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 2. Przyciski boczne (Power, Action, Volume)
+      ctx.save();
+      const btnColor = frameType === 'titanium-black' ? '#333338' : '#8e8e93';
+      ctx.fillStyle = btnColor;
+
+      // Przycisk Power po prawej
+      const pBtnH = Math.round(h * 0.12);
+      const pBtnY = y + Math.round(h * 0.22);
+      ctx.fillRect(x + w - 1, pBtnY, Math.round(w * 0.008), pBtnH);
+
+      // Przycisk Action po lewej
+      const aBtnH = Math.round(h * 0.045);
+      const aBtnY = y + Math.round(h * 0.18);
+      ctx.fillRect(x - Math.round(w * 0.008) + 1, aBtnY, Math.round(w * 0.008), aBtnH);
+
+      // Volume Up & Down po lewej
+      const vBtnH = Math.round(h * 0.075);
+      const v1BtnY = y + Math.round(h * 0.25);
+      const v2BtnY = y + Math.round(h * 0.34);
+      ctx.fillRect(x - Math.round(w * 0.008) + 1, v1BtnY, Math.round(w * 0.008), vBtnH);
+      ctx.fillRect(x - Math.round(w * 0.008) + 1, v2BtnY, Math.round(w * 0.008), vBtnH);
+      ctx.restore();
+
+      // 3. Zewnętrzna krawędź Titanium (Metaliczny gradient)
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, x, y, w, h, outerRadius);
+      const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+      if (frameType === 'titanium-black') {
+        grad.addColorStop(0, '#3f3f46');
+        grad.addColorStop(0.5, '#18181b');
+        grad.addColorStop(1, '#27272a');
+      } else if (frameType === 'titanium-silver') {
+        grad.addColorStop(0, '#f1f5f9');
+        grad.addColorStop(0.5, '#94a3b8');
+        grad.addColorStop(1, '#e2e8f0');
+      } else {
+        // Natural Titanium
+        grad.addColorStop(0, '#d1d5db');
+        grad.addColorStop(0.3, '#9ca3af');
+        grad.addColorStop(0.7, '#6b7280');
+        grad.addColorStop(1, '#e5e7eb');
+      }
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Wewnętrzny obrys czarny
+      ctx.beginPath();
+      roundRect(ctx, x + bezelRim, y + bezelRim, w - (bezelRim * 2), h - (bezelRim * 2), outerRadius - bezelRim);
+      ctx.fillStyle = '#050505';
+      ctx.fill();
+      ctx.restore();
+
+      // 4. Obszar ekranu i wrysowanie screenshotu
+      const screenX = x + bezelRim + blackBezel;
+      const screenY = y + bezelRim + blackBezel;
+      const screenW = w - ((bezelRim + blackBezel) * 2);
+      const screenH = h - ((bezelRim + blackBezel) * 2);
+
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, screenX, screenY, screenW, screenH, Math.max(12, screenRadius));
+      ctx.clip();
+
+      if (img) {
+        ctx.drawImage(img, screenX, screenY, screenW, screenH);
+      } else {
+        ctx.fillStyle = '#1c1c1e';
+        ctx.fillRect(screenX, screenY, screenW, screenH);
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Brak screena', screenX + screenW / 2, screenY + screenH / 2);
+      }
+      ctx.restore();
+
+      // 5. Dynamic Island (Wyspa z aparatem)
+      const diW = Math.round(screenW * 0.28);
+      const diH = Math.round(diW * 0.29);
+      const diX = Math.round(screenX + (screenW - diW) / 2);
+      const diY = Math.round(screenY + screenW * 0.032);
+      const diRadius = diH / 2;
+
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, diX, diY, diW, diH, diRadius);
+      ctx.fillStyle = '#000000';
+      ctx.fill();
+
+      // Obiektyw aparatu (małe kółko z subtelnym niebieskawym refleksem)
+      const camR = Math.round(diH * 0.24);
+      const camX = diX + diW - Math.round(diH * 0.65);
+      const camY = diY + diH / 2;
+      ctx.beginPath();
+      ctx.arc(camX, camY, camR, 0, Math.PI * 2);
+      ctx.fillStyle = '#090d16';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(camX - 1, camY - 1, camR * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // RYSOWANIE RAMKI IPAD PRO (Smukłe jednolite ramki, zaokrąglone narożniki)
+    function drawIpadFrame(ctx, img, x, y, w, h, shadowEnabled, frameType) {
+      const outerRadius = Math.round(w * 0.045);
+      const bezelRim = Math.max(3, Math.round(w * 0.008));
+      const blackBezel = Math.max(10, Math.round(w * 0.022));
+      const screenRadius = outerRadius - bezelRim - blackBezel;
+
+      // Cień
+      if (shadowEnabled) {
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+        ctx.shadowBlur = Math.round(w * 0.06);
+        ctx.shadowOffsetY = Math.round(w * 0.03);
+        ctx.beginPath();
+        roundRect(ctx, x, y, w, h, outerRadius);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Krawędź aluminiowa
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, x, y, w, h, outerRadius);
+      ctx.fillStyle = '#27272a';
+      ctx.fill();
+
+      // Wewnętrzny czarny bezel
+      ctx.beginPath();
+      roundRect(ctx, x + bezelRim, y + bezelRim, w - (bezelRim * 2), h - (bezelRim * 2), outerRadius - bezelRim);
+      ctx.fillStyle = '#08080a';
+      ctx.fill();
+      ctx.restore();
+
+      // Ekran
+      const screenX = x + bezelRim + blackBezel;
+      const screenY = y + bezelRim + blackBezel;
+      const screenW = w - ((bezelRim + blackBezel) * 2);
+      const screenH = h - ((bezelRim + blackBezel) * 2);
+
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, screenX, screenY, screenW, screenH, Math.max(8, screenRadius));
+      ctx.clip();
+
+      if (img) {
+        ctx.drawImage(img, screenX, screenY, screenW, screenH);
+      } else {
+        ctx.fillStyle = '#1c1c1e';
+        ctx.fillRect(screenX, screenY, screenW, screenH);
+      }
+      ctx.restore();
+
+      // Przednia kamerka iPada
+      const camY = y + Math.round((bezelRim + blackBezel) / 2);
+      const camX = x + w / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(camX, camY, Math.round(w * 0.005), 0, Math.PI * 2);
+      ctx.fillStyle = '#000000';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(camX, camY, Math.round(w * 0.002), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Podgląd modala
+    async function openPreview(screen) {
+      activePreviewScreen = screen;
+      document.getElementById('modalTitle').textContent = `Podgląd: ${screen.filename}`;
+      previewModal.classList.add('active');
+      updateModalPreview();
+    }
+
+    modalCloseBtn.addEventListener('click', () => previewModal.classList.remove('active'));
+    previewModal.addEventListener('click', (e) => {
+      if (e.target === previewModal) previewModal.classList.remove('active');
+    });
+
+    previewPresetSelect.addEventListener('change', updateModalPreview);
+
+    async function updateModalPreview() {
+      if (!activePreviewScreen) return;
+      const preset = previewPresetSelect.value;
+      let w = 1179, h = 2556;
+      if (preset === 'apple-iphone-medium') {
+        w = 1179; h = 2556;
+      } else if (preset === 'apple-iphone-large' || preset === 'apple-iphone') {
+        w = 1290; h = 2796;
+      } else if (preset === 'google-mobile') {
+        w = 1080; h = 2400;
+      } else if (preset === 'apple-ipad') {
+        w = 2064; h = 2752;
+      }
+
+      await renderMockupToCanvas(previewCanvas, activePreviewScreen, {
+        width: w,
+        height: h,
+        backgroundColor: styleBgColor.value,
+        shadowEnabled: document.getElementById('styleShadow').checked,
+        frameType: activePreviewScreen.frame
+      });
+    }
+
+    modalDownloadBtn.addEventListener('click', async () => {
+      if (!previewCanvas || !activePreviewScreen) return;
+      modalDownloadBtn.disabled = true;
+      const originalText = modalDownloadBtn.textContent;
+      modalDownloadBtn.textContent = 'Pobieranie...';
+
+      const preset = previewPresetSelect.value;
+      const baseName = activePreviewScreen.filename.replace(/\.[^/.]+$/, "");
+      const filename = `${baseName}-${preset}.png`;
+
+      await triggerDownload(previewCanvas, filename);
+
+      modalDownloadBtn.textContent = '✓ Pobrano!';
+      setTimeout(() => {
+        modalDownloadBtn.disabled = false;
+        modalDownloadBtn.textContent = originalText;
+      }, 1200);
+    });
+
+    // EKSPORT POJEDYNCZEGO EKRANU
+    async function exportSingleScreen(screen, triggerBtn) {
+      if (triggerBtn) {
+        triggerBtn.disabled = true;
+        triggerBtn.textContent = 'Generowanie...';
+      }
+
+      const renderC = document.createElement('canvas');
+      const isIpadScreen = state.ipadScreens.includes(screen);
+      const baseName = screen.filename.replace(/\.[^/.]+$/, "");
+
+      try {
+        if (isIpadScreen) {
+          // iPad export (2064x2752)
+          await renderMockupToCanvas(renderC, screen, {
+            width: 2064,
+            height: 2752,
+            backgroundColor: styleBgColor.value,
+            shadowEnabled: document.getElementById('styleShadow').checked,
+            frameType: screen.frame
+          });
+          await triggerDownload(renderC, `apple-ipad-${baseName}-2064x2752.png`);
+        } else {
+          // iPhone -> Apple iPhone Medium Dynamic Island (1179x2556) - Wymagane
+          await renderMockupToCanvas(renderC, screen, {
+            width: 1179,
+            height: 2556,
+            backgroundColor: styleBgColor.value,
+            shadowEnabled: document.getElementById('styleShadow').checked,
+            frameType: screen.frame
+          });
+          await triggerDownload(renderC, `apple-iphone-medium-${baseName}-1179x2556.png`);
+
+          await new Promise(r => setTimeout(r, 600));
+
+          // iPhone -> Apple iPhone Large Dynamic Island (1290x2796)
+          await renderMockupToCanvas(renderC, screen, {
+            width: 1290,
+            height: 2796,
+            backgroundColor: styleBgColor.value,
+            shadowEnabled: document.getElementById('styleShadow').checked,
+            frameType: screen.frame
+          });
+          await triggerDownload(renderC, `apple-iphone-large-${baseName}-1290x2796.png`);
+
+          await new Promise(r => setTimeout(r, 600));
+
+          // iPhone -> Google Mobile (1080x2400)
+          await renderMockupToCanvas(renderC, screen, {
+            width: 1080,
+            height: 2400,
+            backgroundColor: styleBgColor.value,
+            shadowEnabled: document.getElementById('styleShadow').checked,
+            frameType: screen.frame
+          });
+          await triggerDownload(renderC, `google-mobile-${baseName}-1080x2400.png`);
+        }
+
+        if (triggerBtn) {
+          triggerBtn.textContent = '✓ Pobrano!';
+          setTimeout(() => {
+            triggerBtn.disabled = false;
+            triggerBtn.textContent = '💾 Pobierz';
+          }, 1500);
+        }
+      } catch (err) {
+        console.error('Błąd eksportu pojedynczego screena:', err);
+        alert('Wystąpił błąd pobierania: ' + err.message);
+        if (triggerBtn) {
+          triggerBtn.disabled = false;
+          triggerBtn.textContent = '💾 Pobierz';
+        }
+      }
+    }
+
+    function triggerDownload(canvas, filename) {
+      return new Promise((resolve) => {
+        try {
+          if (canvas.toBlob) {
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                console.warn('toBlob zwrócił null, fallback na dataUrl');
+                fallbackDataUrl(canvas, filename);
+                resolve();
+                return;
+              }
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.style.display = 'none';
+              a.download = filename;
+              a.href = url;
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                resolve();
+              }, 400);
+            }, 'image/png');
+          } else {
+            fallbackDataUrl(canvas, filename);
+            resolve();
+          }
+        } catch (err) {
+          console.error('Błąd triggerDownload:', err);
+          fallbackDataUrl(canvas, filename);
+          resolve();
+        }
+      });
+    }
+
+    function fallbackDataUrl(canvas, filename) {
+      try {
+        const dataUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.download = filename;
+        a.href = dataUrl;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 400);
+      } catch (e) {
+        console.error('Błąd fallbackDataUrl:', e);
+        alert('Przeglądarka zablokowała eksport pliku (Security/CORS). Załaduj screeny przyciskiem "Dodaj screeny" lub przeciągnij pliki.');
+      }
+    }
+
+    // MASOWY EKSPORT WSZYSTKIEGO DO PACZKI ZIP (Z katalogami apple-iphone, apple-ipad, google-mobile)
+    exportZipBtn.addEventListener('click', async () => {
+      if (typeof JSZip === 'undefined') {
+        alert('Biblioteka JSZip nie została jeszcze załadowana.');
+        return;
+      }
+
+      exportZipBtn.disabled = true;
+      progressBanner.classList.add('active');
+
+      const zip = new JSZip();
+      const folderAppleIphone = zip.folder('apple-iphone');
+      const folderAppleIpad = zip.folder('apple-ipad');
+      const folderGoogleMobile = zip.folder('google-mobile');
+
+      // Zbieramy wybrane rozdzielczości
+      const iphoneResList = [];
+      if (document.getElementById('res_iphone_medium_61').checked) {
+        iphoneResList.push({ w: 1179, h: 2556, tag: '1179x2556', name: 'iphone-medium-1179x2556', folder: 'apple-iphone-medium-display-1179x2556' });
+      }
+      if (document.getElementById('res_iphone_67').checked) {
+        iphoneResList.push({ w: 1290, h: 2796, tag: '1290x2796', name: 'iphone-large-1290x2796', folder: 'apple-iphone-large-display-1290x2796' });
+      }
+      if (document.getElementById('res_iphone_medium_63').checked) {
+        iphoneResList.push({ w: 1206, h: 2622, tag: '1206x2622', name: 'iphone-medium-1206x2622', folder: 'apple-iphone-medium-6.3-1206x2622' });
+      }
+      if (document.getElementById('res_iphone_16pm').checked) {
+        iphoneResList.push({ w: 1320, h: 2868, tag: '1320x2868', name: 'iphone-large-1320x2868', folder: 'apple-iphone-large-6.9-1320x2868' });
+      }
+      if (document.getElementById('res_iphone_65').checked) {
+        iphoneResList.push({ w: 1242, h: 2688, tag: '1242x2688', name: 'iphone-65-1242x2688', folder: 'apple-iphone-6.5' });
+      }
+      if (resIphoneCustomToggle.checked) {
+        const cw = parseInt(document.getElementById('res_iphone_custom_w').value) || 1179;
+        const ch = parseInt(document.getElementById('res_iphone_custom_h').value) || 2556;
+        iphoneResList.push({ w: cw, h: ch, tag: `${cw}x${ch}`, name: `iphone-custom-${cw}x${ch}`, folder: 'apple-iphone-custom' });
+      }
+
+      const googleResList = [];
+      if (document.getElementById('res_google_209').checked) googleResList.push({ w: 1080, h: 2400, tag: '1080x2400', name: 'google-1080x2400' });
+      if (document.getElementById('res_google_1959').checked) googleResList.push({ w: 1080, h: 2340, tag: '1080x2340', name: 'google-1080x2340' });
+      if (document.getElementById('res_google_169').checked) googleResList.push({ w: 1080, h: 1920, tag: '1080x1920', name: 'google-1080x1920' });
+      if (resGoogleCustomToggle.checked) {
+        const cw = parseInt(document.getElementById('res_google_custom_w').value) || 1080;
+        const ch = parseInt(document.getElementById('res_google_custom_h').value) || 2400;
+        googleResList.push({ w: cw, h: ch, tag: `${cw}x${ch}`, name: `google-custom-${cw}x${ch}` });
+      }
+
+      const ipadResList = [];
+      if (document.getElementById('res_ipad_13').checked) ipadResList.push({ w: 2064, h: 2752, tag: '2064x2752', name: 'ipad-13-2064x2752', folder: 'apple-ipad-13-display-2064x2752' });
+      if (document.getElementById('res_ipad_129').checked) ipadResList.push({ w: 2048, h: 2732, tag: '2048x2732', name: 'ipad-129-2048x2732', folder: 'apple-ipad-12.9-display-2048x2732' });
+      if (resIpadCustomToggle.checked) {
+        const cw = parseInt(document.getElementById('res_ipad_custom_w').value) || 2064;
+        const ch = parseInt(document.getElementById('res_ipad_custom_h').value) || 2752;
+        ipadResList.push({ w: cw, h: ch, tag: `${cw}x${ch}`, name: `ipad-custom-${cw}x${ch}`, folder: 'apple-ipad-custom' });
+      }
+
+      const totalOperations = (state.iphoneScreens.length * (iphoneResList.length + googleResList.length)) +
+                              (state.ipadScreens.length * ipadResList.length);
+      if (totalOperations === 0) {
+        alert('Nie dodano jeszcze żadnych screenów do wyeksportowania. Dodaj pliki (PNG/JPG) i spróbuj ponownie.');
+        exportZipBtn.disabled = false;
+        progressBanner.classList.remove('active');
+        return;
+      }
+      let completedOps = 0;
+
+      const renderC = document.createElement('canvas');
+
+      function updateProgress(msg) {
+        completedOps++;
+        const pct = Math.round((completedOps / totalOperations) * 100);
+        progressPercent.textContent = `${pct}%`;
+        progressStatus.textContent = msg;
+        progressBarFill.style.width = `${pct}%`;
+      }
+
+      try {
+        // 1. Przetwarzanie screenów iPhone -> Apple iPhone i Google Mobile
+        for (const screen of state.iphoneScreens) {
+          const baseName = screen.filename.replace(/\.[^/.]+$/, "");
+
+          // Dla Apple iPhone
+          for (const res of iphoneResList) {
+            updateProgress(`Renderowanie iPhone: ${screen.filename} (${res.tag})...`);
+            await renderMockupToCanvas(renderC, screen, {
+              width: res.w,
+              height: res.h,
+              backgroundColor: styleBgColor.value,
+              shadowEnabled: document.getElementById('styleShadow').checked,
+              frameType: screen.frame
+            });
+            const blob = await new Promise(r => renderC.toBlob(r, 'image/png'));
+            if (res.folder) {
+              zip.folder(res.folder).file(`${baseName}-${res.name}.png`, blob);
+            }
+            folderAppleIphone.file(`${baseName}-${res.name}.png`, blob);
+          }
+
+          // Dla Google Mobile
+          for (const res of googleResList) {
+            updateProgress(`Renderowanie Google: ${screen.filename} (${res.tag})...`);
+            await renderMockupToCanvas(renderC, screen, {
+              width: res.w,
+              height: res.h,
+              backgroundColor: styleBgColor.value,
+              shadowEnabled: document.getElementById('styleShadow').checked,
+              frameType: screen.frame
+            });
+            const blob = await new Promise(r => renderC.toBlob(r, 'image/png'));
+            folderGoogleMobile.file(`${baseName}-${res.name}.png`, blob);
+          }
+        }
+
+        // 2. Przetwarzanie screenów iPad -> Apple iPad
+        for (const screen of state.ipadScreens) {
+          const baseName = screen.filename.replace(/\.[^/.]+$/, "");
+
+          for (const res of ipadResList) {
+            updateProgress(`Renderowanie iPad: ${screen.filename} (${res.tag})...`);
+            await renderMockupToCanvas(renderC, screen, {
+              width: res.w,
+              height: res.h,
+              backgroundColor: styleBgColor.value,
+              shadowEnabled: document.getElementById('styleShadow').checked,
+              frameType: screen.frame
+            });
+            const blob = await new Promise(r => renderC.toBlob(r, 'image/png'));
+            if (res.folder) {
+              zip.folder(res.folder).file(`${baseName}-${res.name}.png`, blob);
+            }
+            folderAppleIpad.file(`${baseName}-${res.name}.png`, blob);
+          }
+        }
+
+        progressStatus.textContent = 'Pakowanie do pliku ZIP...';
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `slicebill-store-mockups-${new Date().toISOString().slice(0, 10)}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error('Błąd eksportu ZIP:', err);
+        alert('Wystąpił błąd podczas generowania paczki ZIP. Sprawdź konsolę.');
+      } finally {
+        exportZipBtn.disabled = false;
+        setTimeout(() => progressBanner.classList.remove('active'), 2500);
+      }
+    });
+
+    // Zapisywanie konfiguracji do pliku JSON
+    saveConfigBtn.addEventListener('click', () => {
+      const configExport = buildConfigExportData();
+      const blob = new Blob([JSON.stringify(configExport, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `store-views-config-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('💾 Konfiguracja została zapisana do pliku JSON');
+    });
+
+    // Wczytywanie konfiguracji z pliku JSON
+    importConfigBtn.addEventListener('click', () => importConfigInput.click());
+    importConfigInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          await applyConfig(parsed, true);
+        } catch (err) {
+          alert('Błąd wczytywania pliku JSON: ' + err.message);
+        } finally {
+          importConfigInput.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Czyszczenie sesji roboczej
+    clearSessionBtn.addEventListener('click', () => {
+      if (confirm('Czy na pewno chcesz wyczyścić bieżącą sesję roboczą i usunąć wszystkie załadowane screeny?')) {
+        clearCachedSession();
+      }
+    });
+
+    // Inicjalizacja aplikacji przy starcie
+    async function initApp() {
+      // 1. Sprawdź cache sesji w IndexedDB
+      const restored = await loadCachedSession();
+      if (!restored) {
+        // 2. Jeśli brak w cache, spróbuj pobrać domyślny store-views-config.json
+        try {
+          const resp = await fetch('store-views-config.json');
+          if (resp.ok) {
+            const data = await resp.json();
+            if ((data.iphoneScreens && data.iphoneScreens.length > 0) || (data.ipadScreens && data.ipadScreens.length > 0)) {
+              await applyConfig(data, false);
+            }
+          }
+        } catch (e) {
+          // cichy fallback (np. protokół file://)
+        }
+        renderScreens();
+      }
+      updateClearBtnVisibility();
+    }
+
+    // Start
+    initApp();
+  </script>
+</body>
+</html>

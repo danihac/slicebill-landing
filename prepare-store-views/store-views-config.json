@@ -1,0 +1,30 @@
+{
+  "resolutions": {
+    "appleIphone": [
+      { "id": "iphone-medium-61", "name": "iPhone Dynamic Island 6.1\" (Medium display - Wymagane)", "width": 1179, "height": 2556, "enabled": true },
+      { "id": "iphone-67-69", "name": "iPhone 6.7\" / 6.9\" (Pro Max / Plus)", "width": 1290, "height": 2796, "enabled": true },
+      { "id": "iphone-medium-63", "name": "iPhone 16 Pro 6.3\" (Medium display)", "width": 1206, "height": 2622, "enabled": false },
+      { "id": "iphone-16-pro-max", "name": "iPhone 16 Pro Max 6.9\"", "width": 1320, "height": 2868, "enabled": false },
+      { "id": "iphone-65", "name": "iPhone 6.5\"", "width": 1242, "height": 2688, "enabled": false }
+    ],
+    "appleIpad": [
+      { "id": "ipad-13-m4", "name": "iPad Pro 13\" (M4)", "width": 2064, "height": 2752, "enabled": true },
+      { "id": "ipad-129", "name": "iPad Pro 12.9\"", "width": 2048, "height": 2732, "enabled": false }
+    ],
+    "googleMobile": [
+      { "id": "google-20-9", "name": "Google Mobile Standard (20:9)", "width": 1080, "height": 2400, "enabled": true },
+      { "id": "google-195-9", "name": "Google Mobile (19.5:9)", "width": 1080, "height": 2340, "enabled": false },
+      { "id": "google-16-9", "name": "Google Mobile (16:9)", "width": 1080, "height": 1920, "enabled": false }
+    ]
+  },
+  "styling": {
+    "backgroundColor": "#0b0b0d",
+    "textColor": "#ffffff",
+    "frameStyle": "titanium-natural",
+    "shadowEnabled": true,
+    "customWidth": "",
+    "customHeight": ""
+  },
+  "iphoneScreens": [],
+  "ipadScreens": []
+}

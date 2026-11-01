@@ -10,7 +10,7 @@ export const pl = {
     privacyTitle: "Polityka prywatności — SliceBill",
     termsTitle: "Regulamin — SliceBill",
     cookiesTitle: "Polityka cookies — SliceBill",
-    ogImage: "/og-image.png",
+    ogImage: "/og-image-pl.png",
   },
 
   nav: {
