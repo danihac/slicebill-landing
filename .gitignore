@@ -21,5 +21,9 @@ pnpm-debug.log*
 # macOS
 .DS_Store
 
+# IDE / local
+.claude/
+
+
 # Store views export output (regenerated via npm run export-store-views)
 prepare-store-views/export/

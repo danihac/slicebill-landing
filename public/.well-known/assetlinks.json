@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.slicebill.app",
+      "sha256_cert_fingerprints": [
+        "CC:94:E6:DF:FD:B3:60:01:8D:C0:63:1B:B6:CC:EB:17:14:99:BB:0B:67:B5:E9:D2:7C:8B:C8:07:4A:FB:53:87",
+        "96:46:C6:03:42:60:3E:85:F3:EC:6E:8E:13:C5:3E:59:DE:15:71:F9:AD:BC:52:C6:DA:D9:C1:96:63:26:6B:D1"
+      ]
+    }
+  }
+]
+

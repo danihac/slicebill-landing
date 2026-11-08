@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "W4ZFC8Z5X7.com.slicebill.app",
+        "paths": [
+          "/invite/*",
+          "/auth-action"
+        ]
+      }
+    ]
+  }
+}
+
