@@ -8,9 +8,10 @@ interface Props {
   description: string;
   lang: Locale;
   canonicalUrl?: string;
+  noindex?: boolean;
 }
 
-const { title, description, lang, canonicalUrl } = Astro.props;
+const { title, description, lang, canonicalUrl, noindex = false } = Astro.props;
 const t = getTranslations(lang);
 const alternateLang: Locale = lang === "en" ? "pl" : "en";
 const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
@@ -23,9 +24,12 @@ const schemaOrg = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   name: "SliceBill",
+  url: "https://slicebill.app",
+  softwareVersion: "1.0.3",
   applicationCategory: "FinanceApplication",
   operatingSystem: "iOS, Android, Web",
   description: t.meta.homeDescription,
+  featureList: t.schema.featureList,
   offers: {
     "@type": "Offer",
     price: "0",
@@ -34,6 +38,12 @@ const schemaOrg = {
   installUrl: [
     STORE_LINKS.appStore,
     STORE_LINKS.googlePlay,
+    STORE_LINKS.webApp,
+  ],
+  sameAs: [
+    STORE_LINKS.appStore,
+    STORE_LINKS.googlePlay,
+    STORE_LINKS.webApp,
   ],
   author: {
     "@type": "Organization",
@@ -58,6 +68,7 @@ const schemaOrg = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
@@ -103,7 +114,7 @@ const schemaOrg = {
     />
 
     <!-- Schema.org -->
-    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />}
   </head>
   <body class="bg-background text-foreground font-sans antialiased">
     <slot />

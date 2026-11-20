@@ -6,7 +6,7 @@ export const pl = {
     siteName: "SliceBill",
     homeTitle: "SliceBill - Podział wydatków bez konta",
     homeDescription:
-      "SliceBill to darmowa aplikacja do podziału wydatków grupowych. Działa offline, chroni prywatność, obsługuje wiele walut. Bez rejestracji.",
+      "SliceBill to darmowa aplikacja bez reklam do podziału wydatków grupowych. Skaner paragonów AI, pełny tryb offline, wiele walut i prywatność bez rejestracji.",
     privacyTitle: "SliceBill - Polityka prywatności",
     termsTitle: "SliceBill - Regulamin",
     cookiesTitle: "SliceBill - Polityka cookies",
@@ -22,7 +22,7 @@ export const pl = {
     heading: "Podziel wydatki bez konta.",
     subheading: "Bez komplikacji.",
     description:
-      "SliceBill to najprostszy sposób na rozliczanie wydatków grupowych — działa offline, chroni Twoją prywatność i automatycznie przelicza waluty.",
+      "SliceBill to darmowa aplikacja bez reklam do rozliczania wydatków grupowych — działa offline, skanuje paragony z AI, chroni prywatność i automatycznie przelicza waluty.",
     badgeAvailable: "Aplikacja dostępna w App Store i Google Play",
     ctaAppStore: "App Store",
     ctaGooglePlay: "Google Play",
@@ -30,30 +30,78 @@ export const pl = {
     comingSoon: "Wkrótce",
     availableNow: "Dostępne teraz",
     screenshotAlt: "SliceBill — widok grup",
+    mockup: {
+      url: "web.slicebill.app",
+      nav: {
+        overview: "Przegląd",
+        groups: "Grupy",
+        activities: "Aktywności",
+        settings: "Ustawienia",
+      },
+      groupsTitle: "Grupy",
+      groups: [
+        {
+          name: "Wyjazd w góry",
+          members: "4 osoby",
+          mode: "Publiczna",
+          highlighted: true,
+        },
+        {
+          name: "Mieszkanie",
+          members: "3 osoby",
+          mode: "Prywatna",
+          highlighted: false,
+        },
+        {
+          name: "Kolacja 🍕",
+          members: "2 osoby",
+          mode: "Lokalna",
+          highlighted: false,
+        },
+      ],
+    },
   },
 
   features: {
     heading: "Zaprojektowany na codzienne życie",
     subheading:
-      "Bez subskrypcji. Bez obowiązkowej rejestracji. Bez danych wysyłanych do zewnętrznych serwisów bez Twojej zgody.",
+      "Za darmo i bez reklam. Bez subskrypcji i obowiązkowej rejestracji — wspierane wyłącznie dobrowolnymi napiwkami.",
     items: [
       {
         icon: "lock",
-        title: "Prywatność przede wszystkim",
+        title: "Prywatność bez konta",
         description:
-          "Zacznij od razu bez zakładania konta. Twoje dane zostają na Twoim urządzeniu. Konto tworzysz tylko gdy chcesz udostępnić grupę.",
+          "Zacznij od razu w trybie lokalnym — bez rejestracji i reklam. Twoje dane zostają na urządzeniu. Darmowe konto zakładasz tylko wtedy, gdy chcesz kopię w chmurze lub współpracę w grupie.",
+      },
+      {
+        icon: "scan",
+        title: "Skaner paragonów AI",
+        description:
+          "Zrób zdjęcie paragonu, a AI odczyta pozycje i kwoty — wystarczy przypisać je do osób. Wypróbuj bez logowania na telefonie, odbierz 10 darmowych skanów z kontem i opcjonalnie doładuj więcej, stawiając kawę.",
       },
       {
         icon: "wifi-off",
-        title: "Działa offline",
+        title: "Pełny tryb offline",
         description:
-          "Utwórz grupę i dodaj wydatki bez dostępu do internetu. Synchronizuj z chmurą kiedy chcesz — albo wcale.",
+          "Dodawaj i edytuj wydatki bez internetu — w grupach lokalnych i w chmurze. Zmiany zapisują się bezpiecznie na urządzeniu i automatycznie synchronizują po powrocie do sieci.",
+      },
+      {
+        icon: "users",
+        title: "Wspólne grupy i uprawnienia",
+        description:
+          "Zapraszaj znajomych linkiem, kodem QR lub e-mailem. Korzystaj z trybu ograniczonego zaufania, przekazywania roli administratora, blokowania edycji oraz archiwizacji grup.",
       },
       {
         icon: "currency",
-        title: "Wiele walut",
+        title: "Wiele walut i kursy na żywo",
         description:
-          "Kursy wymiany na żywo z Europejskiego Banku Centralnego. Każdy wydatek zachowuje oryginalną walutę; SliceBill przelicza automatycznie.",
+          "Aktualne kursy z Europejskiego Banku Centralnego. Każdy wydatek zachowuje oryginalną walutę, a SliceBill automatycznie przelicza salda na walutę rozliczeniową grupy.",
+      },
+      {
+        icon: "activity",
+        title: "Aktywności, powiadomienia i eksport",
+        description:
+          "Śledź historię zmian w zakładce Aktywności i włącz opcjonalne powiadomienia push. Gotowe rozliczenie wyeksportujesz jednym kliknięciem do PDF lub CSV (Excel).",
       },
     ],
   },
@@ -66,25 +114,25 @@ export const pl = {
         number: "01",
         title: "Utwórz grupę",
         description:
-          "Bez rejestracji. Nazwij grupę i dodaj uczestników — to wszystko.",
+          "Bez rejestracji w trybie lokalnym albo z darmowym kontem w chmurze. Nazwij grupę, dodaj uczestników lub zaproś ich linkiem, kodem QR czy e-mailem.",
       },
       {
         number: "02",
-        title: "Dodaj wydatki",
+        title: "Dodaj lub zeskanuj wydatki",
         description:
-          "Wybierz kto zapłacił i podziel koszt po równo, procentowo lub podaj dokładne kwoty.",
+          "Wpisz kwotę ręcznie albo zeskanuj paragon z AI. Przypisz pozycje do osób lub podziel koszt po równo, procentowo czy kwotowo.",
       },
       {
         number: "03",
         title: "Sprawdź kto komu ile jest winien",
         description:
-          "SliceBill automatycznie wylicza minimalną liczbę przelewów potrzebnych do rozliczenia.",
+          "SliceBill przelicza waluty automatycznie i wylicza minimalną liczbę przelewów potrzebnych do rozliczenia grupy.",
       },
       {
         number: "04",
-        title: "Rozlicz się",
+        title: "Rozlicz się i wyeksportuj",
         description:
-          "Oznacz płatności jako zrealizowane. Wyeksportuj podsumowanie do PDF lub CSV.",
+          "Oznacz płatności jako zrealizowane, wyeksportuj raport do PDF lub CSV (Excel) i zarchiwizuj zamkniętą grupę.",
       },
     ],
   },
@@ -96,26 +144,27 @@ export const pl = {
         icon: "plane",
         title: "Wyprawa ze znajomymi",
         description:
-          "Śledź loty, hotele, posiłki i atrakcje w różnych walutach — bez konieczności rejestracji przez kogokolwiek.",
+          "Śledź loty, hotele, posiłki i paragony z restauracji w różnych walutach — nawet bez zasięgu w górach czy za granicą.",
       },
       {
         icon: "home",
         title: "Współlokatorzy",
         description:
-          "Dzielcie czynsz, rachunki i zakupy miesiąc po miesiącu. Ustaw domyślną walutę i zapomnij o obliczeniach.",
+          "Dzielcie czynsz, rachunki i wspólne zakupy miesiąc po miesiącu. Zeskanuj paragon z marketu, przypisz produkty i zapomnij o kalkulatorze.",
       },
       {
         icon: "heart",
         title: "Para i wspólny budżet",
         description:
-          "Zarządzajcie wspólnymi wydatkami bez arkuszy kalkulacyjnych. Prywatne z założenia — udostępniasz kiedy chcesz.",
+          "Zarządzajcie wspólnymi wydatkami bez arkuszy kalkulacyjnych. Prywatnie na telefonie albo w synchronizowanej grupie z powiadomieniami.",
       },
     ],
   },
 
   platforms: {
     heading: "Dostępny na wszystkich platformach",
-    subheading: "Pobierz SliceBill na iOS i Androida lub korzystaj z wersji webowej.",
+    subheading:
+      "Pobierz SliceBill na iOS i Androida lub korzystaj z wersji webowej — z płynną synchronizacją między urządzeniami.",
     ios: {
       label: "iOS",
       badge: "Pobierz w App Store",
@@ -140,6 +189,9 @@ export const pl = {
     tagline: "Najprostszy sposób na podział wydatków grupowych.",
     legal: "Prawne",
     contact: "Kontakt",
+    language: "Język",
+    switchToEn: "EN — Przełącz na angielski",
+    switchToPl: "PL — Polski (bieżący)",
     privacyPolicy: "Polityka prywatności",
     termsOfService: "Regulamin",
     cookiePolicy: "Polityka cookies",
@@ -149,6 +201,17 @@ export const pl = {
     nip: "NIP: 6462933321",
     krs: "KRS: 0000497120",
     copyright: (year: number) => `© ${year} DARDAN SP. Z O.O. Wszelkie prawa zastrzeżone.`,
+  },
+
+  schema: {
+    featureList: [
+      "Rozliczanie wydatków bez rejestracji (tryb lokalny)",
+      "Skaner paragonów AI z przypisywaniem pozycji do uczestników",
+      "Pełny tryb offline z automatyczną synchronizacją po powrocie do sieci",
+      "Obsługa wielu walut z aktualnymi kursami EBC",
+      "Wspólne grupy z zaproszeniami QR/linkiem i kontrolą uprawnień",
+      "Zakładka Aktywności, powiadomienia push oraz eksport PDF i CSV",
+    ],
   },
 
   legal: {

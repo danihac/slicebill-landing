@@ -10,14 +10,14 @@ const t = getTranslations(lang);
   title={t.meta.termsTitle}
   description="SliceBill Terms of Service — rules and conditions for using the app."
   lang={lang}
-  lastUpdated="May 30, 2025"
+  lastUpdated="November 20, 2026"
 >
   <h2>1. About SliceBill</h2>
   <p>
-    SliceBill is an expense-splitting application developed and operated by <strong>DARDAN SP. Z O.O.</strong> (ul. Lewandowskiej 68, 43-143 Lędziny, Poland; NIP: 6462933321; KRS: 0000497120). SliceBill helps groups track shared expenses and calculate who owes what.
+    SliceBill is a free, ad-free expense-splitting application developed and operated by <strong>DARDAN SP. Z O.O.</strong> (ul. Lewandowskiej 68, 43-143 Lędziny, Poland; NIP: 6462933321; KRS: 0000497120). SliceBill helps groups track shared expenses and calculate who owes what.
   </p>
   <p>
-    <strong>SliceBill is not a financial service, a payment processor, or a bank.</strong> The app performs calculations only — it does not move money, hold funds, or execute transactions.
+    <strong>SliceBill is not a financial service, a payment processor, or a bank.</strong> The app performs calculations only — it does not move money between participants, hold funds, or execute settlement transactions.
   </p>
 
   <h2>2. Acceptance of Terms</h2>
@@ -30,26 +30,43 @@ const t = getTranslations(lang);
     You must be at least <strong>13 years old</strong> to use SliceBill. By using the app, you confirm that you meet this age requirement. If you are under 18, you represent that you have parental consent.
   </p>
 
-  <h2>4. Your Account</h2>
+  <h2>4. Your Account and Group Modes</h2>
   <ul>
-    <li>You may use SliceBill without an account (guest mode) for local-only groups.</li>
-    <li>To sync data across devices or share groups, you must create an account using email/password or Google Sign-In.</li>
-    <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
-    <li>You must provide accurate information when creating an account.</li>
-    <li>You may delete your account at any time from Settings. Account deletion is irreversible.</li>
+    <li><strong>Local mode (no account)</strong> — lets you create groups and expenses stored exclusively on your device. DARDAN SP. Z O.O. is not responsible for local data loss (e.g., due to clearing app cache, changing devices, or uninstalling the app).</li>
+    <li><strong>Private mode (cloud &amp; offline)</strong> — requires a free account (email/password, Google Sign-In, or Sign in with Apple). Provides secure cloud backup and full offline editing with automatic sync upon reconnect.</li>
+    <li><strong>Public mode (shared groups)</strong> — requires a free account; lets you invite others (via link, QR code, or email), collaborate in real time, configure admin controls (including Limited Trust permissions and read-only member blocking), and archive settled groups.</li>
+    <li>You are responsible for keeping your credentials confidential and providing accurate details when creating an account.</li>
+    <li>You may permanently delete your account at any time in <strong>Settings -&gt; Delete Account</strong>. Account deletion is irreversible.</li>
   </ul>
 
-  <h2>5. Acceptable Use</h2>
+  <h2>5. AI Receipt Scanner</h2>
+  <ul>
+    <li>The app provides automated line-item and amount extraction from receipt photos (supported formats: JPEG, PNG, and WebP; HEIC images on iOS are converted on-device prior to upload).</li>
+    <li>Unauthenticated mobile users can try the scanner with a free trial limit, while web app scanning requires signing in to a free account (which grants 10 free scans).</li>
+    <li>To prevent abuse and automated traffic, scanning is subject to daily technical rate limits and Firebase App Check verification.</li>
+    <li><strong>AI recognition results are assistive only.</strong> Always verify extracted amounts, currency, and item assignments before saving an expense.</li>
+  </ul>
+
+  <h2>6. Voluntary Tips ("Buy Me a Coffee")</h2>
+  <ul>
+    <li>Core SliceBill features are completely free, with no advertisements or recurring subscriptions.</li>
+    <li>Users may optionally support development through one-time voluntary tips ("Buy Me a Coffee"): via Apple App Store or Google Play (powered by RevenueCat) on mobile, or via Stripe on the web app.</li>
+    <li>As a thank-you reward, tips grant bonus scan credits for the AI receipt scanner.</li>
+    <li>Payment processing and any refunds are governed by the respective store (Apple App Store / Google Play) or Stripe terms.</li>
+    <li>If a guest user creates or signs in to an account on the same device after purchasing a paid tip bonus as a guest, only unused paid bonus scans above the guest free threshold are eligible to transfer to the account.</li>
+  </ul>
+
+  <h2>7. Acceptable Use</h2>
   <p>You agree not to:</p>
   <ul>
     <li>Use SliceBill for any unlawful purpose or in violation of applicable laws</li>
-    <li>Attempt to reverse-engineer, decompile, or circumvent security measures</li>
+    <li>Attempt to reverse-engineer, decompile, or circumvent security measures (including Firebase App Check or scan limits)</li>
     <li>Use the app to harass, defraud, or harm other users</li>
     <li>Attempt to gain unauthorized access to other users' data</li>
     <li>Use automated tools (bots, scrapers) to access the service</li>
   </ul>
 
-  <h2>6. Your Data and Content</h2>
+  <h2>8. Your Data and Content</h2>
   <p>
     You retain ownership of all data you enter into SliceBill (expense names, amounts, member names). By using the service, you grant DARDAN SP. Z O.O. a limited license to store and process this data solely to provide the SliceBill service.
   </p>
@@ -57,38 +74,38 @@ const t = getTranslations(lang);
     We do not claim ownership of your data and do not use it for advertising or sale to third parties.
   </p>
 
-  <h2>7. Disclaimer of Warranties</h2>
+  <h2>9. Disclaimer of Warranties</h2>
   <p>
-    SliceBill is provided <strong>"as is"</strong> without warranty of any kind. We do not guarantee that the app will be error-free, uninterrupted, or meet your specific requirements. Expense calculations are provided for informational purposes and may contain errors.
+    SliceBill is provided <strong>"as is"</strong> without warranty of any kind. We do not guarantee that the app will be error-free, uninterrupted, or meet your specific requirements. Expense calculations, currency conversions, and AI scanner outputs are provided for informational purposes and may contain errors.
   </p>
   <p>
     <strong>Always verify settlement amounts independently before making payments.</strong>
   </p>
 
-  <h2>8. Limitation of Liability</h2>
+  <h2>10. Limitation of Liability</h2>
   <p>
-    To the maximum extent permitted by Polish law, DARDAN SP. Z O.O. shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of SliceBill, including but not limited to financial losses resulting from calculation errors or data loss.
+    To the maximum extent permitted by Polish law, DARDAN SP. Z O.O. shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of SliceBill, including but not limited to financial losses resulting from calculation errors or local data loss.
   </p>
 
-  <h2>9. Service Availability</h2>
+  <h2>11. Service Availability</h2>
   <p>
     We aim to provide a reliable service but do not guarantee 100% uptime. We may modify, suspend, or discontinue any part of the service at any time, with or without notice.
   </p>
 
-  <h2>10. Changes to These Terms</h2>
+  <h2>12. Changes to These Terms</h2>
   <p>
     We may update these Terms from time to time. We will notify you of material changes by updating the "Last updated" date. Continued use of SliceBill after changes constitutes acceptance of the updated terms.
   </p>
 
-  <h2>11. Governing Law</h2>
+  <h2>13. Governing Law and Dispute Resolution</h2>
   <p>
-    These Terms are governed by <strong>Polish law</strong>. Any disputes shall be resolved in the courts competent for the registered office of DARDAN SP. Z O.O.
+    These Terms are governed by <strong>Polish law</strong>. Any disputes with non-consumer users shall be resolved by the courts competent for the registered office of DARDAN SP. Z O.O.
   </p>
   <p>
-    If you are a consumer in the EU, you also have the right to use the EU Online Dispute Resolution platform: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>
+    EU consumers have the right to use out-of-court Alternative Dispute Resolution (ADR) mechanisms. In Poland, information about authorized ADR entities is maintained by the Office of Competition and Consumer Protection (UOKiK): <a href="https://polubowne.uokik.gov.pl/" target="_blank" rel="noopener noreferrer">polubowne.uokik.gov.pl</a>, and equivalent national ADR registers are available across EU member states.
   </p>
 
-  <h2>12. Contact</h2>
+  <h2>14. Contact</h2>
   <p>
     DARDAN SP. Z O.O.<br />
     ul. Lewandowskiej 68, 43-143 Lędziny, Poland<br />

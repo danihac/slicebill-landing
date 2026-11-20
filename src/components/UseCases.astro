@@ -23,9 +23,9 @@ const icons: Record<string, string> = {
       </h2>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-3">
+    <ul role="list" class="grid gap-4 sm:grid-cols-3">
       {t.useCases.items.map((item) => (
-        <div class="rounded-xl border border-border bg-card p-6">
+        <li class="rounded-xl border border-border bg-card p-6">
           <div
             class="mb-5 inline-flex h-10 w-10 items-center justify-center text-foreground"
             aria-hidden="true"
@@ -33,8 +33,8 @@ const icons: Record<string, string> = {
           />
           <h3 class="mb-2 text-base font-semibold text-foreground">{item.title}</h3>
           <p class="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>

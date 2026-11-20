@@ -10,7 +10,7 @@ const t = getTranslations(lang);
   title={t.meta.privacyTitle}
   description="Polityka prywatności SliceBill — jak zbieramy, używamy i chronimy Twoje dane osobowe."
   lang={lang}
-  lastUpdated="30 maja 2025"
+  lastUpdated="20 listopada 2026"
 >
   <h2>1. Administrator danych</h2>
   <p>
@@ -23,55 +23,67 @@ const t = getTranslations(lang);
   <h2>2. Jakie dane zbieramy</h2>
   <h3>Dane podawane dobrowolnie</h3>
   <ul>
-    <li><strong>Adres e-mail</strong> — przy zakładaniu konta lub logowaniu przez Google</li>
+    <li><strong>Adres e-mail</strong> — przy zakładaniu konta przez e-mail/hasło lub logowaniu przez Google albo Sign in with Apple</li>
     <li><strong>Nazwa wyświetlana / pseudonim</strong> — wybierany przez Ciebie w ustawieniach aplikacji</li>
-    <li><strong>Avatar profilu</strong> — opcjonalny, generowany lub uploadowany przez Ciebie</li>
-    <li><strong>Dane wydatków i grup</strong> — nazwy, kwoty, waluty, imiona uczestników, które wprowadzasz</li>
+    <li><strong>Avatar profilu</strong> — opcjonalny avatar SVG generowany lokalnie na urządzeniu na podstawie wybranego identyfikatora (seed) — aplikacja nie wysyła zdjęć profilowych ani zapytań do zewnętrznych generatorów avatarów</li>
+    <li><strong>Dane wydatków i grup</strong> — nazwy grup, wydatki, kwoty, waluty, płatności oraz imiona uczestników, które wprowadzasz</li>
+    <li><strong>Zdjęcia paragonów (Skaner AI)</strong> — dobrowolnie przesyłane zdjęcia w formatach JPEG, PNG lub WebP (na iOS format HEIC jest konwertowany na urządzeniu), przetwarzane przez Google Cloud Vertex AI (Gemini) w regionie europe-central2 (Warszawa) w celu odczytania pozycji i kwot. Domyślnie zdjęcia nie są trwale przechowywane na serwerach; ewentualne próbki diagnostyczne zapisane przy aktywnej fladze technicznej są usuwane wraz z usunięciem konta</li>
+    <li><strong>Zgłoszenia opinii i błędów</strong> — treść wiadomości oraz opcjonalny adres e-mail podany dobrowolnie w formularzu opinii w aplikacji</li>
   </ul>
   <h3>Dane zbierane automatycznie</h3>
   <ul>
-    <li><strong>Logi Firebase Authentication</strong> — zdarzenia logowania, adres IP, typ urządzenia</li>
-    <li><strong>Logi dostępu do Firebase Firestore</strong> — znaczniki czasowe operacji (po stronie serwera, bez śledzenia analitycznego)</li>
-    <li><strong>Preferencja języka</strong> — przechowywana lokalnie na Twoim urządzeniu</li>
+    <li><strong>Logi Firebase Authentication i Firestore</strong> — zdarzenia logowania, adres IP, typ urządzenia oraz znaczniki czasowe operacji (wyłącznie po stronie serwera, w celach bezpieczeństwa i świadczenia usługi)</li>
+    <li><strong>Firebase Crashlytics (wersje mobilne)</strong> — anonimizowane raporty awarii, ślady stosu oraz telemetria błędów uwierzytelniania służące poprawie stabilności aplikacji</li>
+    <li><strong>Tokeny powiadomień push (FCM)</strong> — zapisywane wyłącznie wtedy, gdy wyrazisz zgodę na powiadomienia w aplikacji</li>
+    <li><strong>Firebase App Check i ochrona przed nadużyciami</strong> — tokeny weryfikacji integralności urządzenia/przeglądarki (Google Play Integrity, Apple App Attest/DeviceCheck, Google reCAPTCHA Enterprise) oraz tymczasowe dzienne rejestry limitu zapytań IP dla niezalogowanych skanów mobilnych (automatycznie usuwane codziennie o północy)</li>
+    <li><strong>Pamięć lokalna i tryb offline</strong> — grupy lokalne, ustawienia języka/motywu/waluty oraz oczekujące zmiany trybu offline zapisywane lokalnie na urządzeniu (Hive CE oraz cache offline Firestore)</li>
   </ul>
   <p>
-    <strong>Nie używamy reklamodawców śledzących, zewnętrznych platform analitycznych (np. Google Analytics) ani nie sprzedajemy Twoich danych żadnej stronie trzeciej.</strong>
+    <strong>Nie używamy trackerów reklamowych, zewnętrznych platform analityki marketingowej (np. Google Analytics, Meta Pixel) ani nie sprzedajemy Twoich danych żadnej stronie trzeciej.</strong>
   </p>
 
   <h2>3. Podstawa prawna przetwarzania</h2>
   <ul>
-    <li><strong>Wykonanie umowy (art. 6 ust. 1 lit. b RODO)</strong> — w celu świadczenia usługi SliceBill, w tym zarządzania kontem, synchronizacji wydatków i współdzielenia grup.</li>
-    <li><strong>Zgoda (art. 6 ust. 1 lit. a RODO)</strong> — dla funkcji opcjonalnych, takich jak powiadomienia push. Możesz wycofać zgodę w dowolnym momencie w ustawieniach aplikacji.</li>
-    <li><strong>Uzasadniony interes (art. 6 ust. 1 lit. f RODO)</strong> — w celu monitorowania bezpieczeństwa usługi i zapobiegania nadużyciom.</li>
+    <li><strong>Wykonanie umowy (art. 6 ust. 1 lit. b RODO)</strong> — w celu świadczenia usługi SliceBill, w tym zarządzania kontem, synchronizacji wydatków (także offline), skanowania paragonów AI i współdzielenia grup.</li>
+    <li><strong>Zgoda (art. 6 ust. 1 lit. a RODO)</strong> — dla funkcji opcjonalnych, takich jak powiadomienia push lub opcjonalna komunikacja produktowa. Możesz wycofać zgodę w dowolnym momencie w ustawieniach aplikacji lub poprzez link wypisu w wiadomości e-mail.</li>
+    <li><strong>Uzasadniony interes (art. 6 ust. 1 lit. f RODO)</strong> — w celu ochrony usługi przed botami i nadużyciami (App Check, limity skanów), diagnozowania błędów (Crashlytics) oraz zapewnienia bezpieczeństwa infrastruktury.</li>
   </ul>
 
   <h2>4. Jak długo przechowujemy dane</h2>
   <ul>
-    <li>Dane konta i wydatków są przechowywane przez cały czas aktywności konta.</li>
-    <li>Po usunięciu konta Twoje dane osobowe są od razu usuwane, chyba że dłuższy okres przechowywania jest wymagany przez prawo.</li>
-    <li>Dane lokalne (grupy utworzone bez konta) są przechowywane wyłącznie na Twoim urządzeniu i nie są przesyłane na nasze serwery.</li>
+    <li>Dane konta i grup w chmurze są przechowywane przez cały czas aktywności konta.</li>
+    <li>Po usunięciu konta Twoje dane osobowe są niezwłocznie usuwane lub anonimizowane zgodnie z pkt 5, chyba że dłuższy okres przechowywania wynika z przepisów podatkowych lub księgowych.</li>
+    <li>Tymczasowe rekordy ochrony przed nadużyciami dla niezalogowanych skanów mobilnych (<code>ip_rate_limits</code>) są automatycznie usuwane codziennie o północy czasu warszawskiego.</li>
+    <li>Dane z trybu lokalnego (grupy utworzone bez konta) są przechowywane wyłącznie na Twoim urządzeniu i nie są przesyłane na nasze serwery.</li>
   </ul>
 
   <h2>5. Usuwanie Konta i Danych Osobowych</h2>
   <p>
-    Użytkownicy aplikacji SliceBill mają prawo w dowolnym momencie zażądać całkowitego usunięcia swojego konta oraz wszelkich powiązanych z nim danych osobowych.
+    Użytkownicy aplikacji SliceBill mają prawo w dowolnym momencie zażądać trwałego usunięcia swojego konta oraz powiązanych danych osobowych.
   </p>
   <h3>Jak zgłosić wniosek o usunięcie konta?</h3>
   <ol>
-    <li><strong>W aplikacji:</strong> Przejdź do Ustawienia -&gt; Profil -&gt; Usuń konto.</li>
+    <li><strong>W aplikacji:</strong> Przejdź do <strong>Ustawienia -&gt; Usuń konto</strong>.</li>
     <li><strong>Forma kontaktowa:</strong> Wyślij wiadomość e-mail z adresu powiązanego z Twoim kontem na adres <a href="mailto:support@slicebill.app">support@slicebill.app</a> z tytułem „Prośba o usunięcie konta”.</li>
   </ol>
   <h3>Jakie dane zostaną usunięte?</h3>
   <p>
-    Po przetworzeniu wniosku nieodwracalnie usuwamy: profil użytkownika, adres e-mail, identyfikatory urządzeń FCM, historię udziału w grupach oraz limit skanów. Dane transakcyjne wymagane przepisami prawa podatkowego (np. faktury Stripe) są przechowywane zgodnie z obowiązującymi przepisami.
+    Po potwierdzeniu usunięcia nieodwracalnie usuwamy: profil użytkownika, adres e-mail, rezerwację pseudonimu (nicku), prywatne grupy offline w chmurze, tokeny urządzeń FCM, utworzone linki zaproszeń, saldo i próbki skanera paragonów oraz wypisujemy Twój adres z listy e-mail w Brevo.
+  </p>
+  <p>
+    W publicznych grupach współdzielonych z innymi aktywnymi użytkownikami Twoje powiązania osobowe (<code>uid</code>, e-mail, identyfikator avatara) są usuwane, a historyczny uczestnik zostaje oznaczony dopiskiem <strong>„(deleted)”</strong>, aby pozostali członkowie zachowali spójność rozliczeń (jeśli w grupie nie ma innych zarejestrowanych użytkowników, grupa jest usuwana w całości). Dane rozliczeniowe dobrowolnych płatności wymagane przepisami podatkowymi (np. dokumenty Stripe / sklepów mobilnych) są przechowywane zgodnie z obowiązującym prawem.
   </p>
 
   <h2>6. Komu udostępniamy dane</h2>
-  <p>Udostępniamy Twoje dane wyłącznie:</p>
+  <p>W celu działania aplikacji współpracujemy wyłącznie z następującymi zaufanymi podmiotami przetwarzającymi:</p>
   <ul>
-    <li><strong>Google Firebase</strong> (Google LLC) — dostawca infrastruktury backendowej dla uwierzytelniania, bazy danych i hostingu. Dane mogą być przetwarzane w UE lub USA na podstawie umowy o przetwarzaniu danych i Standardowych Klauzul Umownych.</li>
+    <li><strong>Google Firebase i Google Cloud</strong> (Google LLC) — uwierzytelnianie (Auth), baza danych (Firestore), Cloud Functions i hosting w regionie <code>europe-central2</code> (Warszawa), powiadomienia push (FCM), diagnostyka błędów (Crashlytics), ochrona App Check (Play Integrity, reCAPTCHA Enterprise) oraz <strong>Vertex AI (Gemini)</strong> w <code>europe-central2</code> do odczytu paragonów.</li>
+    <li><strong>Brevo (Sendinblue SAS, Francja / UE)</strong> — wysyłka transakcyjnych wiadomości e-mail (weryfikacja konta, reset hasła, zaproszenia do grup, podziękowanie za wsparcie) oraz opcjonalnych aktualności produktowych (wypis możliwy w każdej chwili oraz automatycznie przy usunięciu konta).</li>
+    <li><strong>Stripe</strong> (Stripe Payments Europe, Ltd. / Stripe, Inc.) — obsługa dobrowolnych napiwków („Postaw mi kawę”) w wersji Web; SliceBill nie przechowuje danych kart płatniczych.</li>
+    <li><strong>RevenueCat, Inc. oraz Apple App Store / Google Play</strong> — weryfikacja dobrowolnych zakupów w aplikacji („Postaw mi kawę”) na urządzeniach iOS i Android.</li>
+    <li><strong>Frankfurter API (kursy EBC)</strong> — pobieranie publicznych kursów wymiany walut (przesyłane są wyłącznie kody walut, bez danych osobowych użytkowników).</li>
   </ul>
-  <p>Nie udostępniamy Twoich danych żadnym innym stronom trzecim.</p>
+  <p>Nie sprzedajemy ani nie udostępniamy Twoich danych żadnym brokerom danych ani sieciom reklamowym.</p>
 
   <h2>7. Twoje prawa wynikające z RODO</h2>
   <p>Przysługuje Ci prawo do:</p>
@@ -80,16 +92,16 @@ const t = getTranslations(lang);
     <li><strong>Sprostowania</strong> niedokładnych danych</li>
     <li><strong>Usunięcia</strong> danych ("prawo do bycia zapomnianym")</li>
     <li><strong>Ograniczenia</strong> przetwarzania</li>
-    <li><strong>Przeniesienia</strong> danych — otrzymania danych w formacie nadającym się do odczytu maszynowego</li>
+    <li><strong>Przeniesienia</strong> danych — otrzymania danych w formacie nadającym się do odczytu maszynowego (np. eksport CSV/PDF wydatków grupowych)</li>
     <li><strong>Sprzeciwu</strong> wobec przetwarzania opartego na uzasadnionym interesie</li>
     <li><strong>Wycofania zgody</strong> w dowolnym momencie (dla przetwarzania opartego na zgodzie)</li>
-    <li><strong>Wniesienia skargi</strong> do polskiego organu nadzorczego (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a></li>
+    <li><strong>Wniesienia skargi</strong> do polskiego organu nadzorczego (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener noreferrer">uodo.gov.pl</a></li>
   </ul>
   <p>Aby skorzystać ze swoich praw, skontaktuj się z nami: <a href="mailto:support@slicebill.app">support@slicebill.app</a></p>
 
   <h2>8. Bezpieczeństwo danych</h2>
   <p>
-    Stosujemy odpowiednie środki techniczne w celu ochrony Twoich danych, w tym szyfrowany transport (HTTPS/TLS), reguły bezpieczeństwa Firebase ograniczające dostęp do danych wyłącznie dla uwierzytelnionych właścicieli, oraz tokeny zaproszeń z ograniczonym czasem ważności do udostępniania grup.
+    Stosujemy wielowarstwowe środki bezpieczeństwa: szyfrowany transport (HTTPS/TLS), weryfikację integralności aplikacji przez <strong>Firebase App Check</strong> (Apple App Attest, Google Play Integrity, reCAPTCHA Enterprise), rygorystyczne reguły bezpieczeństwa Firestore ograniczające zapis i odczyt wyłącznie do uprawnionych użytkowników, atomowe transakcje serwerowe oraz wygasające 256-bitowe tokeny zaproszeń do grup.
   </p>
 
   <h2>9. Dzieci</h2>

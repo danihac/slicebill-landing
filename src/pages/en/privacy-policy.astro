@@ -10,7 +10,7 @@ const t = getTranslations(lang);
   title={t.meta.privacyTitle}
   description="SliceBill Privacy Policy — how we collect, use, and protect your personal data."
   lang={lang}
-  lastUpdated="May 30, 2025"
+  lastUpdated="November 20, 2026"
 >
   <h2>1. Data Controller</h2>
   <p>
@@ -23,55 +23,67 @@ const t = getTranslations(lang);
   <h2>2. What Data We Collect</h2>
   <h3>Data you provide voluntarily</h3>
   <ul>
-    <li><strong>Email address</strong> — when you create an account or sign in with Google</li>
+    <li><strong>Email address</strong> — when you create an account with email/password or sign in with Google or Sign in with Apple</li>
     <li><strong>Display name / nickname</strong> — chosen by you in app settings</li>
-    <li><strong>Profile avatar</strong> — optional, chosen by you (Dicebear generated or uploaded)</li>
-    <li><strong>Expense and group data</strong> — names, amounts, currencies, member names you enter</li>
+    <li><strong>Profile avatar</strong> — optional SVG avatar generated locally on your device from a chosen seed — the app does not upload profile photos or call external avatar APIs</li>
+    <li><strong>Expense and group data</strong> — group names, expenses, amounts, currencies, payments, and member names you enter</li>
+    <li><strong>Receipt photos (AI Receipt Scanner)</strong> — voluntarily submitted JPEG, PNG, or WebP images (iOS HEIC images are converted on-device), processed by Google Cloud Vertex AI (Gemini) in <code>europe-central2</code> (Warsaw) to extract line items and totals. Images are not permanently stored on our servers by default; any optional diagnostic samples stored under an active technical flag are deleted upon account deletion</li>
+    <li><strong>Feedback & bug reports</strong> — messages and optional contact email submitted voluntarily via the in-app feedback form</li>
   </ul>
   <h3>Data collected automatically</h3>
   <ul>
-    <li><strong>Firebase Authentication logs</strong> — sign-in events, IP address, device type</li>
-    <li><strong>Firebase Firestore access logs</strong> — database read/write timestamps (server-side, no analytics tracking)</li>
-    <li><strong>Language preference</strong> — stored locally on your device</li>
+    <li><strong>Firebase Authentication & Firestore logs</strong> — sign-in events, IP address, device type, and operation timestamps (server-side only, for security and service delivery)</li>
+    <li><strong>Firebase Crashlytics (mobile apps)</strong> — crash logs, stack traces, and non-fatal authentication error telemetry used to improve app stability</li>
+    <li><strong>Push notification tokens (FCM)</strong> — stored only when you opt in to notifications in app settings</li>
+    <li><strong>Firebase App Check & abuse prevention</strong> — device/browser attestation tokens (Google Play Integrity, Apple App Attest/DeviceCheck, Google reCAPTCHA Enterprise) and temporary daily IP rate-limit records for unauthenticated mobile guest scans (automatically purged daily at midnight)</li>
+    <li><strong>Local & offline storage</strong> — local-only groups, language/theme/currency preferences, and pending offline writes stored on your device (Hive CE and Firestore offline cache)</li>
   </ul>
   <p>
-    <strong>We do not use advertising trackers, third-party analytics platforms (such as Google Analytics), or sell your data to any third party.</strong>
+    <strong>We do not use advertising trackers, third-party marketing analytics platforms (such as Google Analytics or Meta Pixel), or sell your data to any third party.</strong>
   </p>
 
   <h2>3. Why We Process Your Data (Legal Basis)</h2>
   <ul>
-    <li><strong>Contract performance (Art. 6(1)(b) GDPR)</strong> — to provide the SliceBill service, including account management, expense syncing, and group collaboration.</li>
-    <li><strong>Consent (Art. 6(1)(a) GDPR)</strong> — for optional features such as push notifications. You may withdraw consent at any time in app settings.</li>
-    <li><strong>Legitimate interest (Art. 6(1)(f) GDPR)</strong> — for service security monitoring and fraud prevention.</li>
+    <li><strong>Contract performance (Art. 6(1)(b) GDPR)</strong> — to provide the SliceBill service, including account management, expense syncing (including offline edits), AI receipt scanning, and group collaboration.</li>
+    <li><strong>Consent (Art. 6(1)(a) GDPR)</strong> — for optional features such as push notifications or optional product communications. You may withdraw consent at any time in app settings or via the email unsubscribe link.</li>
+    <li><strong>Legitimate interest (Art. 6(1)(f) GDPR)</strong> — for protecting the service against bots and abuse (App Check, scan rate limits), diagnosing crashes (Crashlytics), and infrastructure security.</li>
   </ul>
 
   <h2>4. How Long We Keep Your Data</h2>
   <ul>
-    <li>Account and expense data is retained as long as your account is active.</li>
-    <li>After account deletion, your personal data is deleted immediately, except where a longer retention is required by law.</li>
-    <li>Local-only data (groups created without an account) is stored only on your device and is not transmitted to our servers.</li>
+    <li>Account and cloud group data is retained as long as your account is active.</li>
+    <li>After account deletion, your personal data is promptly deleted or anonymized as described in Section 5, except where longer retention is required by tax or accounting law.</li>
+    <li>Temporary anti-abuse rate-limit records for unauthenticated mobile scans (<code>ip_rate_limits</code>) are automatically deleted daily at midnight Warsaw time.</li>
+    <li>Local-only mode data (groups created without an account) is stored exclusively on your device and is not transmitted to our servers.</li>
   </ul>
 
   <h2>5. Account and Personal Data Deletion</h2>
   <p>
-    SliceBill users have the right to request full deletion of their account and all associated personal data at any time.
+    SliceBill users have the right to request permanent deletion of their account and associated personal data at any time.
   </p>
   <h3>How to request account deletion?</h3>
   <ol>
-    <li><strong>In the app:</strong> Go to Settings -&gt; Profile -&gt; Delete account.</li>
+    <li><strong>In the app:</strong> Go to <strong>Settings -&gt; Delete Account</strong>.</li>
     <li><strong>Contact form:</strong> Send an email from the address associated with your account to <a href="mailto:support@slicebill.app">support@slicebill.app</a> with the subject "Account deletion request".</li>
   </ol>
   <h3>What data will be deleted?</h3>
   <p>
-    Upon processing your request, we irreversibly delete: user profile, email address, FCM device tokens, group participation history, and scan limit. Transaction data required by tax law (e.g. Stripe invoices) is retained in accordance with applicable legal regulations.
+    Upon confirmation, we irreversibly delete: your user profile, email address, nickname reservation, private cloud offline groups, FCM device tokens, invite links you created, receipt scan quota/samples, and we unsubscribe your email from Brevo.
+  </p>
+  <p>
+    In shared public groups with other active members, your personal identity links (<code>uid</code>, email, avatar seed) are severed and the historical participant is marked <strong>"(deleted)"</strong> so remaining members do not lose settlement history (if no other registered members remain, the group is deleted completely). Voluntary tip billing records required by tax law (e.g. Stripe or mobile store records) are retained as required by applicable regulations.
   </p>
 
   <h2>6. Data Sharing</h2>
-  <p>We share your data only with:</p>
+  <p>To operate SliceBill, we share necessary data only with the following trusted processors:</p>
   <ul>
-    <li><strong>Google Firebase</strong> (Google LLC) — our backend infrastructure provider for authentication, database, and hosting. Data may be processed in the EU or US under Google's data processing agreement and Standard Contractual Clauses.</li>
+    <li><strong>Google Firebase & Google Cloud</strong> (Google LLC) — authentication (Auth), database (Firestore), Cloud Functions and Hosting in <code>europe-central2</code> (Warsaw), push notifications (FCM), crash diagnostics (Crashlytics), App Check security (Play Integrity, reCAPTCHA Enterprise), and <strong>Vertex AI (Gemini)</strong> in <code>europe-central2</code> for AI receipt parsing.</li>
+    <li><strong>Brevo (Sendinblue SAS, France / EU)</strong> — transactional emails (account verification, password reset, group invitations, supporter thank-you emails) and optional product updates (unsubscribe anytime; auto-unsubscribed upon account deletion).</li>
+    <li><strong>Stripe</strong> (Stripe Payments Europe, Ltd. / Stripe, Inc.) — processing voluntary web tips ("Buy Me a Coffee"); SliceBill never stores payment card numbers.</li>
+    <li><strong>RevenueCat, Inc. & Apple App Store / Google Play</strong> — processing and verifying voluntary mobile in-app tips ("Buy Me a Coffee") on iOS and Android.</li>
+    <li><strong>Frankfurter API (ECB rates)</strong> — public exchange rate lookup (only currency codes are transmitted, with no personal user data).</li>
   </ul>
-  <p>We do not share your data with any other third parties.</p>
+  <p>We never sell or share your data with data brokers or advertising networks.</p>
 
   <h2>7. Your Rights Under GDPR</h2>
   <p>You have the right to:</p>
@@ -80,16 +92,16 @@ const t = getTranslations(lang);
     <li><strong>Rectify</strong> inaccurate data</li>
     <li><strong>Erase</strong> your data ("right to be forgotten")</li>
     <li><strong>Restrict</strong> processing</li>
-    <li><strong>Data portability</strong> — receive your data in a machine-readable format</li>
+    <li><strong>Data portability</strong> — receive your data in a machine-readable format (e.g. PDF/CSV group expense exports)</li>
     <li><strong>Object</strong> to processing based on legitimate interests</li>
     <li><strong>Withdraw consent</strong> at any time (for consent-based processing)</li>
-    <li><strong>Lodge a complaint</strong> with the Polish supervisory authority (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a></li>
+    <li><strong>Lodge a complaint</strong> with the Polish supervisory authority (UODO): <a href="https://uodo.gov.pl" target="_blank" rel="noopener noreferrer">uodo.gov.pl</a></li>
   </ul>
   <p>To exercise your rights, contact us at <a href="mailto:support@slicebill.app">support@slicebill.app</a>.</p>
 
   <h2>8. Data Security</h2>
   <p>
-    We implement appropriate technical measures to protect your data, including encrypted transport (HTTPS/TLS), Firebase Security Rules limiting data access to authenticated owners, and time-limited invite tokens for group sharing.
+    We apply multi-layered technical safeguards, including encrypted transport (HTTPS/TLS), <strong>Firebase App Check</strong> attestation (Apple App Attest, Google Play Integrity, reCAPTCHA Enterprise), strict Firebase Security Rules allowlists limiting read/write access to authorized owners, atomic server-side transactions, and expiring 256-bit group invite tokens.
   </p>
 
   <h2>9. Children</h2>

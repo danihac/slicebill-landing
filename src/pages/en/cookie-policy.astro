@@ -10,53 +10,60 @@ const t = getTranslations(lang);
   title={t.meta.cookiesTitle}
   description="SliceBill Cookie Policy — what cookies we use and how to manage them."
   lang={lang}
-  lastUpdated="May 30, 2025"
+  lastUpdated="November 20, 2026"
 >
   <h2>1. What Are Cookies?</h2>
   <p>
-    Cookies are small text files stored on your device by your web browser when you visit a website. They are widely used to make websites work efficiently and to provide information to site owners.
+    Cookies are small text files stored on your device by your web browser when you visit a website. They are widely used to make websites work reliably, maintain security, and remember user preferences.
   </p>
 
-  <h2>2. Cookies We Use</h2>
-  <p>SliceBill (web version) uses only essential cookies required for the app to function:</p>
+  <h2>2. Cookies and Local Storage We Use</h2>
+  <p>SliceBill (<code>slicebill.app</code> and the web app <code>web.slicebill.app</code>) uses only strictly necessary technical storage required for app operation and security:</p>
 
-  <h3>Essential Cookies</h3>
+  <h3>Essential Cookies and Browser Storage</h3>
   <ul>
     <li>
-      <strong>Firebase Authentication session</strong> — stores your login state so you remain signed in between sessions. Without this cookie the app cannot authenticate you.
-      <br /><em>Duration: session / up to 1 year (persistent login)</em>
+      <strong>Firebase Authentication session</strong> — stores your sign-in state in browser storage (IndexedDB / cookies) so you remain authenticated across sessions.
+      <br /><em>Duration: session / persistent login</em>
     </li>
     <li>
-      <strong>Language preference</strong> — stores your chosen language (Polish or English) so you don't need to switch every visit.
-      <br /><em>Duration: 1 year | Storage: localStorage (not a cookie per se, but similar purpose)</em>
+      <strong>Offline browser storage (Hive CE &amp; Firestore IndexedDB cache)</strong> — stores local-only groups created without an account, language/theme/currency preferences, and pending offline edits until synced to the server.
+      <br /><em>Duration: until you clear site data or delete groups in the app</em>
+    </li>
+    <li>
+      <strong>Google reCAPTCHA Enterprise (Firebase App Check)</strong> — strictly necessary security cookies and attestation tokens on <code>web.slicebill.app</code> used exclusively to protect API endpoints from bots and abuse (never for advertising).
+      <br /><em>Duration: session / per Google security policy</em>
     </li>
   </ul>
 
   <h3>What We Do NOT Use</h3>
   <ul>
-    <li>Advertising or tracking cookies</li>
-    <li>Third-party analytics cookies (no Google Analytics, Meta Pixel, etc.)</li>
+    <li>Advertising or profiling cookies</li>
+    <li>Third-party marketing analytics cookies (no Google Analytics, Meta Pixel, etc.)</li>
     <li>Social media tracking pixels</li>
     <li>Any cookies that track you across other websites</li>
   </ul>
 
   <h2>3. Third-Party Cookies</h2>
   <p>
-    SliceBill uses <strong>Google Firebase</strong> for authentication and database services. Firebase may set cookies necessary for its authentication flow. These cookies are governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.
+    SliceBill uses <strong>Google Firebase</strong> (authentication and database) and <strong>Google reCAPTCHA Enterprise</strong> (Firebase App Check bot protection). These mechanisms only set essential authentication and security tokens governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.
   </p>
   <p>
-    Google Fonts is used to load the Inter typeface from Google's CDN. Google may log the font request (IP address, browser information). No personal data beyond what is standard for web server logs is collected.
+    If you voluntarily send a tip on the web app ("Buy Me a Coffee"), redirecting to the <strong>Stripe</strong> Checkout gateway uses Stripe's essential security and checkout session cookies.
+  </p>
+  <p>
+    Google Fonts is used to load the Inter typeface on this landing site from Google's CDN. Google may process standard font request headers (IP address, browser details).
   </p>
 
   <h2>4. Managing Cookies</h2>
   <p>
-    You can control and delete cookies through your browser settings. Please note that disabling essential cookies may prevent SliceBill's web app from functioning correctly (you may be unable to sign in).
+    You can control and delete cookies or site data through your browser settings. Please note that disabling essential cookies or IndexedDB will prevent signing in on <code>web.slicebill.app</code>, disable offline syncing, and prevent saving local groups.
   </p>
   <p>Browser cookie management guides:</p>
   <ul>
-    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
-    <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener">Mozilla Firefox</a></li>
-    <li><a href="https://support.apple.com/en-us/105082" target="_blank" rel="noopener">Safari</a></li>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/en-us/105082" target="_blank" rel="noopener noreferrer">Safari</a></li>
   </ul>
 
   <h2>5. Changes to This Policy</h2>
